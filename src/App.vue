@@ -2,19 +2,29 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <Header msg="Welcome to Your Vue.js App"/>
-    <Home>
+    <button>Home</button>
+    <button>About</button>
+    <component :is=""></component>
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue'
 import Home from './components/Home.vue'
+import About from './components/About.vue'
 
 export default {
-  name: 'App',
+  data(){
+    return(){
+      number: 14,
+      currentComponent: "Home"
+
+    };
+  },
   components: {
-    Header:
-    Home
+    Header,
+    Home,
+    About
   }
 }
 </script>
