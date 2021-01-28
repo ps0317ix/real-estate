@@ -1,14 +1,26 @@
 <template>
   <div class="container">
     <h1>Home</h1>
-    <p v-border:dotted="{width: '5px', color: 'brown'}">ボーダー</p>
-    
+    <div>
+      <label for="name">名前：</label>
+      <input 
+        id="name"
+        type="text"
+        v-model="name"
+      >
+      <label for="comment">コメント：</label>
+      <textarea 
+        id="comment" 
+        v-model="comment"></textarea>
+        <button @click="createComment">コメントをサーバーに送る</button>
+      <h2>掲示板</h2>
+    </div>
   </div>
-
 </template>
 
 
 <script>
+import axios from "axios";
 
 export default {
   
@@ -18,16 +30,36 @@ export default {
   },
   data(){
     return{
-      number: 14,
-      eventData: {
-        title: "タイトル",
-        maxNumber: 0,
-        host: "",
-        detail: ""
-      }
+      name: "",
+      comment: ""
     };
   },
-  
+  methods: {
+    createComment() {
+      axios
+        .post(
+          'https://firestore.googleapis.com/v1/projects/real-estate-4ff0d/databases/(default)/documents/comments',
+          {
+            fields: {
+              name: {
+                stringValue: this.name
+              },
+              comment: {
+                stringValue: this.comment
+              }
+            }
+          }
+       )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        this.name = "";
+        this.comment = "";
+      }
+  }
 }
 </script>
 
@@ -46,5 +78,9 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.container{
+  display: block;
 }
 </style>

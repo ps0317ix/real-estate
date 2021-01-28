@@ -8,11 +8,6 @@
       <li>
         <router-link to="/about">About</router-link>
       </li>
-      <input
-       type="text"
-       :value="message"
-       @input="updateMessage"
-      >
     </ul>
   
     
@@ -20,19 +15,12 @@
 </template>
 
 <script>
-import {mapAction} from 'vuex';
 
 export default {
   name: 'Header',
   props: {
     msg: String
-  },
-  computed: {
-    ...mapAction(["doubleCount"]),
-    message(){
-      return this.$store.getters.message;
-    }
-  } 
+  }
 }
 </script>
 
