@@ -1,14 +1,19 @@
 <template>
-  <div class="hello">
+  <div class="container">
     <h1>About</h1>
+    <router-link to="/about/1">About1</router-link>
+    <router-link to="/about/2">About2</router-link>
+    <p>{{ id }}</p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'About',
-  props: {
-    msg: String
+  props: ["id"],
+  watch:{
+    $route(){
+    }
   }
 }
 </script>

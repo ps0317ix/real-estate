@@ -1,33 +1,17 @@
 <template>
   <div class="container">
-    <h1>Home</h1>
-    <p v-border:dotted="{width: '5px', color: 'brown'}">ボーダー</p>
-    
+    <h1>About us</h1>
   </div>
-
 </template>
 
-
 <script>
-
 export default {
-  
-  name: 'Home',
-  props: {
-    msg: String
-  },
-  data(){
-    return{
-      number: 14,
-      eventData: {
-        title: "タイトル",
-        maxNumber: 0,
-        host: "",
-        detail: ""
-      }
-    };
-  },
-  
+  name: 'About',
+  props: ["id"],
+  watch:{
+    $route(){
+    }
+  }
 }
 </script>
 

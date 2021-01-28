@@ -1,30 +1,46 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
+  <div class="header">
+    <ul>
+      <li><h1>{{ msg }}</h1></li>
+      <li>
+        <router-link to="/">Home</router-link>
+      </li>
+      <li>
+        <router-link to="/about">About</router-link>
+      </li>
+      <input
+       type="text"
+       :value="message"
+       @input="updateMessage"
+      >
+    </ul>
+  
+    
   </div>
 </template>
 
 <script>
+import {mapAction} from 'vuex';
+
 export default {
   name: 'Header',
   props: {
     msg: String
-  }
+  },
+  computed: {
+    ...mapAction(["doubleCount"]),
+    message(){
+      return this.$store.getters.message;
+    }
+  } 
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
 ul {
   list-style-type: none;
+  display: flex;
   padding: 0;
 }
 li {
