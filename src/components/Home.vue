@@ -12,8 +12,14 @@
       <textarea 
         id="comment" 
         v-model="comment"></textarea>
-        <button @click="createComment">コメントをサーバーに送る</button>
+      <button @click="createComment">コメントをサーバーに送る</button>
       <h2>掲示板</h2>
+      <div v-for="post in posts" :key="post.name">
+        <div>
+          名前：{{ post.fields.name.stringValue }}
+          コメント：{{ post.fields.comment.stringValue }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,22 +29,30 @@
 import axios from "axios";
 
 export default {
-  
-  name: 'Home',
-  props: {
-    msg: String
+    name: 'Home',
+    props: {
+      msg: String
   },
-  data(){
-    return{
-      name: "",
-      comment: ""
-    };
+    data(){
+      return{
+        name: "",
+        comment: "",
+        posts: []
+      }
+  },
+  created() {
+      axios.get(
+        '/comments'
+      ).then(response => {
+        this.posts = response.data.documents;
+        console.log(response.data.documents);
+      });
   },
   methods: {
     createComment() {
       axios
         .post(
-          'https://firestore.googleapis.com/v1/projects/real-estate-4ff0d/databases/(default)/documents/comments',
+          '/comments',
           {
             fields: {
               name: {
