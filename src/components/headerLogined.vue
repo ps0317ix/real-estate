@@ -8,22 +8,14 @@
       <li>
         <router-link to="/about">About</router-link>
       </li>
-      <li>
-        <router-link to="/login">ログイン</router-link>
-      </li>
-      <li>
-        <router-link to="/register">新規登録</router-link>
-      </li>
     </ul>
-  
-    
   </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Header',
+  name: 'headerLogined',
   props: {
     msg: String
   }
