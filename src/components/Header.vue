@@ -7,7 +7,7 @@
       </li>
       <template v-if="isAuthenticated">
         <li>
-          <router-link @click="logout" class="header-text-link">ログアウト</router-link>
+          <a @click="logout" class="header-text-link">ログアウト</a>
         </li>
       </template>
       <template v-if="!isAuthenticated">
@@ -49,6 +49,7 @@ header{
   width: 100%;
   padding: 0px 10px;
   background: #42b983;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
 }
 
 header ul {

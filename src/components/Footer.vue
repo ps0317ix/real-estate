@@ -5,12 +5,19 @@
       <li>
         <router-link to="/about" class="footer-text-link">About</router-link>
       </li>
-      <li>
-        <router-link to="/login" class="footer-text-link">ログイン</router-link>
-      </li>
-      <li>
-        <router-link to="/register" class="footer-text-link">新規登録</router-link>
-      </li>
+      <template v-if="isAuthenticated">
+        <li>
+          <a @click="logout" class="footer-text-link">ログアウト</a>
+        </li>
+      </template>
+      <template v-if="!isAuthenticated">
+        <li>
+          <router-link to="/login" class="header-text-link">ログイン</router-link>
+        </li>
+        <li>
+          <router-link to="/register" class="header-text-link">新規登録</router-link>
+        </li>
+      </template>
     </ul>
   </footer>
 </template>
@@ -21,6 +28,16 @@ export default {
   name: 'Footer',
   props: {
     msg: String
+  },
+  computed: {
+    isAuthenticated(){
+      return this.$store.getters.idToken !== null;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+    }
   }
 }
 </script>
@@ -31,6 +48,7 @@ footer{
   display: flex;
   width: 100%;
   padding: 0px 10px;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
 }
 
 footer ul {

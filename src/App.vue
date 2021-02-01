@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header msg="Real estate App"/>
+    
     <router-view></router-view>
     <Footer msg="Real estate App"/>
   </div>
@@ -27,6 +28,21 @@ export default {
   width: 100%;
 }
 
+.fv_image{
+  height: 400px;
+  background-position: center;
+}
+
+.fv_image h1{
+  margin: 0px;
+  text-align: center;
+  text-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+}
+
+.fv_image_title{
+  line-height: 400px;
+}
+
 .container{
   width: 95%;
   max-width: 1200px;
@@ -39,9 +55,10 @@ body{
 
 .form{
   display: block;
-  width: 350px;
+  width: 600px;
   margin: auto;
-  padding: 30px 0px;
+  padding: 30px;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
 }
 
 .form label{
@@ -52,7 +69,6 @@ body{
 .form input{
   display: block;
   width: 300px;
-  margin: auto;
 }
 
 .form textarea{
