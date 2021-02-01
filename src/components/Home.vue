@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Home</h1>
-    <div>
+    <div class="form">
       <label for="name">名前：</label>
       <input 
         id="name"
@@ -42,8 +42,11 @@ export default {
   },
   created() {
       axios.get(
-        '/comments'
-      ).then(response => {
+        '/comments',{
+        headers: {
+          Authorization: `Bearer ${this.idToken}`
+        }
+      }).then(response => {
         this.posts = response.data.documents;
         console.log(response.data.documents);
       });
@@ -62,7 +65,12 @@ export default {
                 stringValue: this.comment
               }
             }
+          },
+          {
+          headers: {
+            Authorization: `Bearer ${this.idToken}`
           }
+        }
        )
         .then(response => {
           console.log(response);
@@ -92,9 +100,5 @@ li {
 }
 a {
   color: #42b983;
-}
-
-.container{
-  display: block;
 }
 </style>

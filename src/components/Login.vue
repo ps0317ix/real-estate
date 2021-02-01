@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>ログイン</h1>
-    <div>
+    <div class="form">
       <label for="email">メールアドレス：</label>
       <input 
         id="email"
@@ -9,17 +9,16 @@
         v-model="email"
       >
       <label for="password">パスワード</label>
-      <textarea 
+      <input 
         id="password"
         type="password"
-        v-model="password"></textarea>
+        v-model="password">
       <button @click="login">ログイン</button>
     </div>
   </div>
 </template>
 
 <script>
-
 
 export default {
     data(){

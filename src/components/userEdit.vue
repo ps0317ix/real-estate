@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <h1>About us</h1>
+    <h1>編集</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'About',
+  name: 'userEdit',
   props: ["id"],
   watch:{
     $route(){

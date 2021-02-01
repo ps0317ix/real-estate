@@ -10,11 +10,7 @@
 <script>
 export default {
   name: 'About',
-  props: ["id"],
-  watch:{
-    $route(){
-    }
-  }
+  props: ["id"]
 }
 </script>
 

@@ -1,24 +1,24 @@
 <template>
   <div id="app">
-    <div class="header">
-    <ul>
-      <li><h1>{{ msg }}</h1></li>
-      <li>
-        <router-link to="/">Home</router-link>
-      </li>
-      <li>
-        <router-link to="/user">新規登録</router-link>
-      </li>
-    </ul>
-  </div>
-    <router-view></router-view>
+    <div class="container">
+      <h1>〜さま、こんにちは</h1>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  components: {
+  computed: {
+    isAuthenticated() {
+      return this.$store.getters.idToken !== null;
+    }
+  },
+  methods: {
+    logout() {
+      this.$store.dispatch('logout');
+    }
   }
 }
 </script>
