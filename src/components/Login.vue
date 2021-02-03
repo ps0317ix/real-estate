@@ -1,19 +1,23 @@
 <template>
-  <div class="container">
-    <h1>ログイン</h1>
-    <div class="form">
-      <label for="email">メールアドレス：</label>
-      <input 
-        id="email"
-        type="email"
-        v-model="email"
-      >
-      <label for="password">パスワード</label>
-      <input 
-        id="password"
-        type="password"
-        v-model="password">
-      <button @click="login">ログイン</button>
+  <div>
+    <div class="fv_image">
+      <h1 class="fv_image_title">ログイン</h1>
+    </div>
+    <div class="container">
+      <div class="form">
+        <label for="email">メールアドレス：</label>
+        <input 
+          id="email"
+          type="email"
+          v-model="email"
+        >
+        <label for="password">パスワード</label>
+        <input 
+          id="password"
+          type="password"
+          v-model="password">
+        <button @click="login">ログイン</button>
+      </div>
     </div>
   </div>
 </template>
@@ -39,3 +43,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+  .fv_image{
+    background-image: url('../assets/pixta_64405275_M.jpg');
+  }
+</style>

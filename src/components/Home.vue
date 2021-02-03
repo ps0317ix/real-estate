@@ -1,25 +1,34 @@
 <template>
-  <div>
+  <div class="">
     <div class="fv_image">
       <h1 class="fv_image_title">Home</h1>
     </div>
     <div class="container">
-      <div class="our_service">
-        <h2>OUR SERVICE</h2>
-      </div>
+      <transition
+       name="fade"
+       appear
+      >
+        <div class="our_service">
+          <h2>OUR SERVICE</h2>
+        </div>
+      </transition>
+      
       <div class="form">
-        <h2>お問い合せ</h2>
+        <h2>お問い合わせ</h2>
         <label for="name">名前：</label>
         <input 
           id="name"
           type="text"
           v-model="name"
+          class="input"
         >
         <label for="comment">コメント：</label>
         <textarea 
           id="comment" 
-          v-model="comment"></textarea>
-        <button @click="createComment">コメントをサーバーに送る</button>
+          v-model="comment"
+          class="textarea"
+        ></textarea>
+        <button @click="createComment" class="button is-info is-medium">送信</button>
         <h2>掲示板</h2>
         <div v-for="post in posts" :key="post.name">
           <div>
@@ -63,7 +72,7 @@ export default {
     createComment() {
       axios
         .post(
-          '/comments',
+          '/contact',
           {
             fields: {
               name: {

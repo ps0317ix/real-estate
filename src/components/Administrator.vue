@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="fv_image">
-      <h1 class="fv_image_title">User</h1>
+      <h1 class="fv_image_title">管理者</h1>
     </div>
     <div class="container">
-      <h1>〜さま、こんにちは</h1>
+      <h1>管理者さま、こんにちは</h1>
       <router-view></router-view>
     </div>
   </div>

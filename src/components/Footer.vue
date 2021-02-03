@@ -17,6 +17,9 @@
         <li>
           <router-link to="/register" class="header-text-link">新規登録</router-link>
         </li>
+        <li>
+          <router-link to="/register" class="header-text-link">管理者ログイン</router-link>
+        </li>
       </template>
     </ul>
   </footer>
@@ -48,7 +51,11 @@ footer{
   display: flex;
   width: 100%;
   padding: 0px 10px;
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+}
+
+.footer-link{
+  line-height: 84px;
+  font-size: 28px;
 }
 
 footer ul {

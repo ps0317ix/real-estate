@@ -51,7 +51,11 @@ export default new Vuex.Store({
                         expiresIn: response.data.expiresIn,
                         refreshToken: response.data.refreshToken,
                     });
-                    router.push('/user');
+                    if(authData.email!="exam@exam.com"){
+                        router.push('/user');
+                    }else{
+                        router.push('/administrator');
+                    }
                 });
         },
         logout({ commit }) {

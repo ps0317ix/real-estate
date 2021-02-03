@@ -1,9 +1,13 @@
 <template>
-  <div class="container">
-    <h1>About</h1>
-    <router-link to="/about/1">About1</router-link>
-    <router-link to="/about/2">About2</router-link>
-    <p>{{ id }}</p>
+  <div>
+    <div class="fv_image">
+      <h1 class="fv_image_title">About</h1>
+    </div>
+    <div class="container">
+      <router-link to="/about/1">About1</router-link>
+      <router-link to="/about/2">About2</router-link>
+      <p>{{ id }}</p>
+    </div>
   </div>
 </template>
 
@@ -29,5 +33,9 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.fv_image{
+  background-image: url('../assets/pixta_64405275_M.jpg');
 }
 </style>

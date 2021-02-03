@@ -1,11 +1,21 @@
 <template>
   <header>
-    <h1><router-link to="/" class="header-link">{{ msg }}</router-link></h1>
+    <h1><router-link to="/">{{ msg }}</router-link></h1>
     <ul>
       <li>
         <router-link to="/about" class="header-text-link">About</router-link>
       </li>
       <template v-if="isAuthenticated">
+        <template v-if="isAdministrator">
+          <li>
+            <router-link to="/administrator" class="header-text-link">管理者ホーム</router-link>
+          </li>
+        </template>
+        <template v-if="!isAdministrator">
+          <li>
+            <router-link to="/user" class="header-text-link">ユーザー</router-link>
+          </li>
+        </template>
         <li>
           <a @click="logout" class="header-text-link">ログアウト</a>
         </li>
@@ -32,6 +42,9 @@ export default {
   computed: {
     isAuthenticated(){
       return this.$store.getters.idToken !== null;
+    },
+    isAdministrator(){
+      return this.$store.getters.admin === true;
     }
   },
   methods: {
@@ -46,10 +59,13 @@ export default {
 <style scoped>
 header{
   display: flex;
+  position: fixed;
   width: 100%;
+  height: 84px;
   padding: 0px 10px;
   background: #42b983;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+  opacity: 1;
 }
 
 header ul {
@@ -72,6 +88,11 @@ header ul li{
 a {
   color: #fff;
   text-decoration: none;
+}
+
+.header-link{
+  line-height: 84px;
+  font-size: 32px;
 }
 
 .header-text-link{

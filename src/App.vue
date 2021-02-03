@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Header msg="Real estate App"/>
+    <transition>
+      <router-view></router-view>
+    </transition>
     
-    <router-view></router-view>
     <Footer msg="Real estate App"/>
   </div>
 </template>
@@ -58,7 +60,6 @@ body{
   width: 600px;
   margin: auto;
   padding: 30px;
-  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
 }
 
 .form label{
