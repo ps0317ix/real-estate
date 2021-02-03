@@ -76,6 +76,11 @@ header ul {
   right: 0;
 }
 
+h1{
+  font-size: 32px;
+  line-height: 84px;
+}
+
 li {
   display: inline-block;
   margin: 0 20px;

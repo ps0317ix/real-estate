@@ -10,13 +10,16 @@
           id="email"
           type="email"
           v-model="email"
+          class="input"
         >
         <label for="password">パスワード</label>
         <input 
           id="password"
           type="password"
-          v-model="password">
-        <button @click="register">ログイン</button>
+          v-model="password"
+          class="input"
+        >
+        <button @click="register" class="button is-info">ログイン</button>
       </div>
     </div>
   </div>

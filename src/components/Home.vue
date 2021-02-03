@@ -22,18 +22,27 @@
           v-model="name"
           class="input"
         >
-        <label for="comment">コメント：</label>
+        <label for="email">メールアドレス：</label>
+        <input 
+          id="email"
+          type="email"
+          v-model="email"
+          class="input"
+        >
+        <label for="detail">問い合わせ内容：</label>
         <textarea 
-          id="comment" 
-          v-model="comment"
+          id="detail" 
+          v-model="detail"
           class="textarea"
         ></textarea>
-        <button @click="createComment" class="button is-info is-medium">送信</button>
-        <h2>掲示板</h2>
+        <button @click="createContact" class="button is-info">送信</button>
+        
         <div v-for="post in posts" :key="post.name">
+          <h2>問い合わせ内容</h2>
           <div>
             名前：{{ post.fields.name.stringValue }}
-            コメント：{{ post.fields.comment.stringValue }}
+            メールアドレス：{{ post.fields.email.stringValue }}
+            問い合わせ内容：{{ post.fields.detail.stringValue }}
           </div>
         </div>
       </div>
@@ -53,13 +62,14 @@ export default {
     data(){
       return{
         name: "",
-        comment: "",
+        email: "",
+        detail: "",
         posts: []
       }
   },
   created() {
       axios.get(
-        '/comments',{
+        '/contact',{
         headers: {
           Authorization: `Bearer ${this.idToken}`
         }
@@ -69,7 +79,7 @@ export default {
       });
   },
   methods: {
-    createComment() {
+    createContact() {
       axios
         .post(
           '/contact',
@@ -78,8 +88,11 @@ export default {
               name: {
                 stringValue: this.name
               },
-              comment: {
-                stringValue: this.comment
+              email: {
+                stringValue: this.email
+              },
+              detail: {
+                stringValue: this.detail
               }
             }
           },
@@ -96,7 +109,8 @@ export default {
           console.log(error);
         });
         this.name = "";
-        this.comment = "";
+        this.email = "";
+        this.detail = "";
       }
   }
 }
@@ -104,6 +118,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 h3 {
   margin: 40px 0 0;
 }

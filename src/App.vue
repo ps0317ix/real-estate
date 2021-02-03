@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Header msg="Real estate App"/>
-    <transition>
-      <router-view></router-view>
+    <transition mode="out-in">
+      <router-view />
     </transition>
     
     <Footer msg="Real estate App"/>
@@ -22,6 +22,8 @@ export default {
 </script>
 
 <style>
+@import url('https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css');
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -39,6 +41,7 @@ export default {
   margin: 0px;
   text-align: center;
   text-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+  font-size: 32px;
 }
 
 .fv_image_title{
@@ -78,6 +81,13 @@ body{
 
 .form button{
   margin: 10px 0px;
+}
+
+.v-enter-active, .v-leave-active {
+  transition: opacity .5s;
+}
+.v-enter, .v-leave-to {
+  opacity: 0;
 }
 
 </style>

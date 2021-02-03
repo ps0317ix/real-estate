@@ -17,9 +17,6 @@
         <li>
           <router-link to="/register" class="header-text-link">新規登録</router-link>
         </li>
-        <li>
-          <router-link to="/register" class="header-text-link">管理者ログイン</router-link>
-        </li>
       </template>
     </ul>
   </footer>
