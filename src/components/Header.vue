@@ -10,6 +10,9 @@
           <li>
             <router-link to="/administrator" class="header-text-link">管理者ホーム</router-link>
           </li>
+          <li>
+            <router-link to="/administrator/estatecreate" class="header-text-link">不動産情報登録</router-link>
+          </li>
         </template>
         <template v-if="!isAdministrator">
           <li>
@@ -44,7 +47,8 @@ export default {
       return this.$store.getters.idToken !== null;
     },
     isAdministrator(){
-      return this.$store.getters.admin === true;
+      const admin = localStorage.getItem('admin');
+      return admin === 'true';
     }
   },
   methods: {

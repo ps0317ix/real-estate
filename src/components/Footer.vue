@@ -7,6 +7,9 @@
       </li>
       <template v-if="isAuthenticated">
         <li>
+          <router-link to="/user" class="footer-text-link">ユーザー</router-link>
+        </li>
+        <li>
           <a @click="logout" class="footer-text-link">ログアウト</a>
         </li>
       </template>

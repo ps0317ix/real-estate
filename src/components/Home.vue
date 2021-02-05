@@ -22,11 +22,11 @@
           v-model="name"
           class="input"
         >
-        <label for="email">メールアドレス：</label>
+        <label for="contactEmail">メールアドレス：</label>
         <input 
           id="email"
           type="email"
-          v-model="email"
+          v-model="contactEmail"
           class="input"
         >
         <label for="detail">問い合わせ内容：</label>
@@ -35,13 +35,13 @@
           v-model="detail"
           class="textarea"
         ></textarea>
-        <button @click="createContact" class="button is-info">送信</button>
+        <button @click="createContacts" class="button is-info">送信</button>
         
         <div v-for="post in posts" :key="post.name">
           <h2>問い合わせ内容</h2>
           <div>
             名前：{{ post.fields.name.stringValue }}
-            メールアドレス：{{ post.fields.email.stringValue }}
+            メールアドレス：{{ post.fields.contactEmail.stringValue }}
             問い合わせ内容：{{ post.fields.detail.stringValue }}
           </div>
         </div>
@@ -62,7 +62,7 @@ export default {
     data(){
       return{
         name: "",
-        email: "",
+        contactEmail: "",
         detail: "",
         posts: []
       }
@@ -79,7 +79,7 @@ export default {
       });
   },
   methods: {
-    createContact() {
+    createContacts() {
       axios
         .post(
           '/contact',
@@ -88,8 +88,8 @@ export default {
               name: {
                 stringValue: this.name
               },
-              email: {
-                stringValue: this.email
+              contactEmail: {
+                stringValue: this.contactEmail
               },
               detail: {
                 stringValue: this.detail
@@ -109,7 +109,7 @@ export default {
           console.log(error);
         });
         this.name = "";
-        this.email = "";
+        this.contactEmail = "";
         this.detail = "";
       }
   }

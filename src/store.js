@@ -54,6 +54,7 @@ export default new Vuex.Store({
                     if(authData.email!="exam@exam.com"){
                         router.push('/user');
                     }else{
+                        localStorage.setItem('admin', true);
                         router.push('/administrator');
                     }
                 });
@@ -63,6 +64,7 @@ export default new Vuex.Store({
             localStorage.removeItem('idToken');
             localStorage.removeItem('expiryTimeMs');
             localStorage.removeItem('refreshToken');
+            localStorage.removeItem('admin');
             router.replace('/login');
           },
         async refreshIdToken({ dispatch }, refreshToken){
@@ -104,6 +106,7 @@ export default new Vuex.Store({
             localStorage.setItem('idToken', authData.idToken);
             localStorage.setItem('expiryTimeMs', expiryTimeMs);
             localStorage.setItem('refreshToken', authData.refreshToken);
+            
             setTimeout(() => {
                 dispatch('refreshIdToken', authData.refreshToken);
             }, authData.expiresIn * 1000);

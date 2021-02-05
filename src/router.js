@@ -7,6 +7,7 @@ import Login from './components/Login.vue';
 import Register from './components/Register.vue';
 import User from './components/User.vue';
 import Administrator from './components/Administrator.vue';
+import EstateCreate from './components/EstateCreate.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -61,6 +62,17 @@ export default new Router({
         ]},
         {path: '/administrator',
          component: Administrator,
+         children: [
+            {path: 'estatecreate',
+            component: EstateCreate,
+            beforeEnter(to, from, next){
+                if(store.getters.idToken){
+                    next();
+                }else{
+                    next('/login');
+                }
+            }}
+          ],
          beforeEnter(to, from, next){
              if(store.getters.idToken){
                  next();
@@ -69,5 +81,6 @@ export default new Router({
              }
          }
         },
+
     ]
 });

@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import App from './App.vue'
-import Header from './components/Header.vue'
+import Vue from 'vue';
+import App from './App.vue';
+import Header from './components/Header.vue';
 import router from './router';
 import store from './store';
 import axios from "axios";
-
+import firebase from 'firebase';
+import { firebaseConfig } from '../plugins/firebase';
 
 Vue.config.productionTip = false;
 Vue.component("Header", Header);
@@ -18,9 +19,9 @@ Vue.directive("border", function(el, binding){
 // axiosを用いる際のbaseURL
 axios.defaults.baseURL = "https://firestore.googleapis.com/v1/projects/real-estate-4ff0d/databases/(default)/documents/";
 
+// axiosでリクエストを行った際の処理
 const interceptorsRequest = axios.interceptors.request.use(
   config => {
-    // axiosでリクエストを行った際の処理
     console.log('interceptors request', config);
     return config;
   },
@@ -28,9 +29,10 @@ const interceptorsRequest = axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// axiosからレスポンスを受け取った際の処理
 const interceptorsResponse = axios.interceptors.response.use(
   response => {
-    // axiosからレスポンスを受け取った際の処理
     console.log('interceptors response', response);
     return response;
   },
@@ -42,6 +44,9 @@ const interceptorsResponse = axios.interceptors.response.use(
 // 取り除きたい処理
 axios.interceptors.request.eject(interceptorsRequest);
 axios.interceptors.response.eject(interceptorsResponse);
+
+
+firebase.initializeApp(firebaseConfig);
 
 store.dispatch('autoLogin').then(() => {
   new Vue({
