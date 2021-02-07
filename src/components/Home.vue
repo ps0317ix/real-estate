@@ -12,6 +12,16 @@
           <h2>OUR SERVICE</h2>
         </div>
       </transition>
+    <div>
+      <ul class="estate-lists" v-for="estate in estates" :key="estate.index">
+        <li class="estate-list">
+          <img :src="estate.image" v-bind:alt="estate.estateName">
+          <p>{{estate.estateName}}</p>
+          <p>{{estate.description}}</p>
+        </li>
+      </ul>
+    </div>
+      
       
       <div class="form">
         <h2>お問い合わせ</h2>
@@ -53,21 +63,39 @@
 
 <script>
 import axios from "axios";
+import firebase from 'firebase';
 
 export default {
     name: 'Home',
     props: {
       msg: String
-  },
+    },
+    
     data(){
       return{
+        estates: [],
         name: "",
         contactEmail: "",
         detail: "",
-        posts: []
+        posts: [],
       }
   },
   created() {
+    const db = firebase.firestore()
+    const dbEstate = db.collection('estate')
+    dbEstate.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        console.log(doc);
+        const data = doc.data()
+        const estate = {
+          image: data.image,
+          estateName: data.estateName,
+          description: data.description,
+        }
+        console.log(estate);
+        this.estates.push(estate)
+      })
+    }),
       axios.get(
         '/contact',{
         headers: {
@@ -148,5 +176,14 @@ a {
   line-height: 100px;
   padding: 0px 0px 0px 10px;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+}
+
+.estate-lists{
+  display: flex;
+  margin: 50px 0px;
+}
+
+.estate-list{
+  width: 350px;
 }
 </style>

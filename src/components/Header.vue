@@ -70,6 +70,7 @@ header{
   background: #42b983;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
   opacity: 1;
+  z-index: 9999;
 }
 
 header ul {

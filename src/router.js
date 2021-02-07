@@ -8,6 +8,7 @@ import Register from './components/Register.vue';
 import User from './components/User.vue';
 import Administrator from './components/Administrator.vue';
 import EstateCreate from './components/EstateCreate.vue';
+import EstateEdit from './components/EstateEdit.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -65,6 +66,15 @@ export default new Router({
          children: [
             {path: 'estatecreate',
             component: EstateCreate,
+            beforeEnter(to, from, next){
+                if(store.getters.idToken){
+                    next();
+                }else{
+                    next('/login');
+                }
+            }},
+            {path: 'estateedit',
+            component: EstateEdit,
             beforeEnter(to, from, next){
                 if(store.getters.idToken){
                     next();
