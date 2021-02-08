@@ -1,16 +1,10 @@
 <template>
-  <table class="estate-table">
-    <tr v-for="estate in estates" :key="estate.index">
-      <td style="padding: 10px;">物件id</td>
-      <td style="padding: 10px;">画像</td>
-      <td style="padding: 10px;"><p>物件名</p></td>
-      <td style="padding: 10px;"><p>物件概要</p></td>
+  <table>
+    <tr>
+      <td><p>{{ $route.params.id }}</p></td>
     </tr>
-    <tr class="estate-tr" v-for="estate in estates" :key="estate.index">
-      <td><p>{{index}}</p></td>
-      <td><img :src="estate.image" v-bind:alt="estate.estateName"></td>
-      <td><p>{{estate.estateName}}</p></td>
-      <td><p>{{estate.description}}</p></td>
+    <tr>
+      <td><p>{{ name }}</p></td>
     </tr>
   </table>
 </template>
@@ -20,33 +14,38 @@ import firebase from 'firebase';
 
 export default {
   data(){
-      return{
-        estates: [],
-        name: "",
-        contactEmail: "",
-        detail: "",
-        posts: [],
-      }
+    return{
+      props: ["id"],
+      estates: [],
+      estateName: "",
+      contactEmail: "",
+      detail: "",
+      posts: [],
+    }
   },
-  created() {
+  created(){
+    console.log(this.$route.params.id);
     const db = firebase.firestore()
-    const dbEstate = db.collection('estate')
-    dbEstate.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        console.log(doc);
-        const data = doc.data()
-        const estate = {
-          image: data.image,
-          estateName: data.estateName,
-          description: data.description,
-        }
-        console.log(estate);
-        this.estates.push(estate)
-      })
-    })
+    const dbEstate = db.collection('estate').doc(this.$route.params.id)
+    dbEstate.get().then(function(doc) {
+      if (doc.exists){
+        // Convert to City object
+        var data = doc.data();
+        // Use a City instance method
+        console.log(data);
+        this.estateName = doc.estateName
+      } else {
+        console.log("No such document!");
+      }}).catch(function(error) {
+        console.log("Error getting document:", error);
+      });
   },
   methods: {
-    
+    estateupdate() {
+      const db = firebase.firestore()
+      const dbEstate = db.collection('estate')
+      dbEstate.update()
+    }
   },
 }
 </script>
@@ -55,6 +54,10 @@ export default {
 
 .estate-tr{
   height: 100px;
+}
+
+td{
+  padding: 0px 10px;
 }
 
 td img{

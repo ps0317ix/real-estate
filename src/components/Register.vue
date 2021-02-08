@@ -5,6 +5,13 @@
     </div>
     <div class="container">
       <div class="form">
+        <label for="displayName">アカウント名：</label>
+        <input 
+          id="displayName"
+          type="displayName"
+          v-model="displayName"
+          class="input"
+        >
         <label for="email">メールアドレス：</label>
         <input 
           id="email"
@@ -29,6 +36,7 @@
 export default {
     data(){
         return{
+            displayName: '',
             email: '',
             password: ''
         }
@@ -36,9 +44,11 @@ export default {
     methods:{
         register(){
             this.$store.dispatch('register', {
+                displayName: this.displayName,
                 email: this.email,
                 password: this.password
             });
+            this.displayName = '',
             this.email = '';
             this.password = '';
         }

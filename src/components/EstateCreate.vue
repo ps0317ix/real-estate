@@ -6,19 +6,19 @@
     <div class="form">
       <label for="estatename">物件名：</label>
       <input
-      type="text"
-      v-model="estate.estateName"
+        type="text"
+        v-model="estate.estateName"
       >
       <label for="image">画像：</label>
       <input
-      v-if="reset"
-      @change="upload"
-      type="file"
+        v-if="reset"
+        @change="upload"
+        type="file"
       >
       <label for="description">物件概要：</label>
       <input
-      type="text"
-      v-model="estate.description"
+        type="text"
+        v-model="estate.description"
       >
       <p>{‌{estate.estateName}}</p>
       <button @click="entryEstate()" class="button is-info">登録</button>
@@ -86,7 +86,6 @@ export default {
       })
     },
     entryEstate() {
-      // this.errorMessage = ''
       if (!this.estate.estateName || !this.estate.description) {
         this.errormessages.push('物件名と物件概要は必須です')
         console.log(this.errormessages);
@@ -98,7 +97,8 @@ export default {
           .add({
             estateName: this.estate.estateName,
             description: this.estate.description,
-            image: this.estate.image
+            image: this.estate.image,
+            time: firebase.firestore.Timestamp.now()
           })
           .then((docRef) => {
             console.log(docRef.id);

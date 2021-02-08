@@ -46,12 +46,15 @@ export default new Vuex.Store({
                     returnSecureToken: true
                 })
                 .then(response => {
+                    console.log(response);
                     dispatch('setAuthData', {
+                        displayName: response.data.displayName,
                         idToken: response.data.idToken,
                         expiresIn: response.data.expiresIn,
                         refreshToken: response.data.refreshToken,
                     });
                     if(authData.email!="exam@exam.com"){
+                        console.log('ログイン成功');
                         router.push('/user');
                     }else{
                         localStorage.setItem('admin', true);
@@ -61,6 +64,7 @@ export default new Vuex.Store({
         },
         logout({ commit }) {
             commit('updateIdToken', null);
+            localStorage.removeItem('displayName');
             localStorage.removeItem('idToken');
             localStorage.removeItem('expiryTimeMs');
             localStorage.removeItem('refreshToken');
@@ -86,6 +90,7 @@ export default new Vuex.Store({
         register({ dispatch }, authData){
             axios.post(
                 '/accounts:signUp?key=AIzaSyBRXY5FDlCc4YJtnl8l_Avmxed4cUGe29c',{
+                    displayName: authData.displayName,
                     email: authData.email,
                     password: authData.password,
                     returnSecureToken: true
@@ -100,9 +105,11 @@ export default new Vuex.Store({
                 });
         },
         setAuthData({ commit , dispatch}, authData){
+            console.log(authData);
             const now = new Date();
             const expiryTimeMs = now.getTime() + authData.expiresIn * 1000;
             commit('updateIdToken', authData.idToken);
+            localStorage.setItem('displayName', authData.displayName);
             localStorage.setItem('idToken', authData.idToken);
             localStorage.setItem('expiryTimeMs', expiryTimeMs);
             localStorage.setItem('refreshToken', authData.refreshToken);

@@ -6,7 +6,7 @@
     <div class="container">
       <ul class="admin-text-links">
         <li><router-link to="/administrator/estatecreate" class="admin-text-link">不動産情報登録</router-link></li>
-        <li><router-link to="/administrator/estateedit" class="admin-text-link">不動産情報編集</router-link></li>
+        <li><router-link to="/administrator/estateall" class="admin-text-link">不動産情報一覧</router-link></li>
       </ul>
       <router-view></router-view>
     </div>
