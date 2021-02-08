@@ -8,6 +8,7 @@
       <input
         type="text"
         v-model="estate.estateName"
+        class="input"
       >
       <label for="image">画像：</label>
       <input
@@ -15,14 +16,48 @@
         @change="upload"
         type="file"
       >
+      <label for="address">住所：</label>
+      <input
+        type="text"
+        v-model="estate.address"
+        class="input"
+      >
+      <label for="station">最寄駅：</label>
+      <input
+        type="text"
+        v-model="estate.address"
+        class="input"
+      >
+      <label for="rent">賃料：</label>
+      <input
+        type="text"
+        v-model="estate.rent"
+        class="input"
+      >
+      <label for="manage">管理費・共益費：</label>
+      <input
+        type="text"
+        v-model="estate.manage"
+        class="input"
+      >
+      <label for="deposit">敷金・礼金：</label>
+      <input
+        type="text"
+        v-model="estate.deposit"
+        class="input"
+      >
       <label for="description">物件概要：</label>
       <input
         type="text"
         v-model="estate.description"
+        class="input"
       >
-      <p>{‌{estate.estateName}}</p>
       <button @click="entryEstate()" class="button is-info">登録</button>
       <br /><br />
+      <ul v-for="errormessage in errormessages" :key="errormessage.index">
+        <li><p>{{errormessage}}</p></li>
+      </ul>
+      
       <div v-if="entryDocId">
         Firestoreに登録しました。<br>
         DocId：{‌{ entryDocId }}<br>
@@ -50,6 +85,10 @@ export default {
       estate: {
         estateName: "",
         image: '',
+        address: '',
+        rent: '',
+        manage: '',
+        deposit: '',
         description: "",
       },
       errors: []
@@ -86,7 +125,8 @@ export default {
       })
     },
     entryEstate() {
-      if (!this.estate.estateName || !this.estate.description) {
+      let self = this
+      if (!self.estate.estateName || !self.estate.description) {
         this.errormessages.push('物件名と物件概要は必須です')
         console.log(this.errormessages);
         return this.errormessages
@@ -95,23 +135,23 @@ export default {
         const dbEstate = db.collection('estate')
         dbEstate
           .add({
-            estateName: this.estate.estateName,
-            description: this.estate.description,
-            image: this.estate.image,
+            estateName: self.estate.estateName,
+            description: self.estate.description,
+            image: self.estate.image,
             time: firebase.firestore.Timestamp.now()
           })
           .then((docRef) => {
             console.log(docRef.id);
-            this.entryDocId = docRef.id
-            this.estate.estateName = ''
-            this.estate.description = ''
+            self.entryDocId = docRef.id
+            self.estate.estateName = ''
+            self.estate.description = ''
             
-            this.estate.image = ''
-            this.inputFileReset()
+            self.estate.image = ''
+            self.inputFileReset()
           })
           .catch((error) => {
             console.log(error);
-            this.errormessages.push(error)
+            self.errormessages.push(error)
           })
     },
     

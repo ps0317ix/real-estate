@@ -1,22 +1,25 @@
 <template>
-  <table>
-    <tr>
-      <td><h2>物件ID：</h2></td>
-      <td><p>{{ $route.params.id }}</p></td>
-    </tr>
-    <tr>
-      <td><img :src="image"></td>
-    </tr>
-    <tr>
-      <td><h2>物件名：</h2></td>
-      <td><input type="text" :value="estateName"></td>
-    </tr>
-    <tr>
-      <td><h2>物件概要：</h2></td>
-      <td><textarea type="text" :value="description"></textarea></td>
-    </tr>
-    
-  </table>
+  <div class="estateedit">
+    <h1>物件情報編集</h1>
+    <table>
+      <tr>
+        <td><h2>物件ID：</h2></td>
+        <td><p>{{ $route.params.id }}</p></td>
+      </tr>
+      <tr>
+        <td><img :src="image"></td>
+      </tr>
+      <tr>
+        <td><h2>物件名：</h2></td>
+        <td><input type="text" :value="estateName" class="input"></td>
+      </tr>
+      <tr>
+        <td><h2>物件概要：</h2></td>
+        <td><textarea type="text" :value="description" class="textarea"></textarea></td>
+      </tr>
+      
+    </table>
+  </div>
 </template>
 
 <script>
@@ -59,13 +62,24 @@ export default {
 
 <style scoped>
 
+.estateedit{
+  margin: 50px 0px;
+}
+
+h1{
+  font-size: 32px;
+}
+
 .estate-tr{
   height: 100px;
 }
 
+h2, img, p{
+  margin: 10px;
+}
+
 tr{
   padding: 10px;
-  margin: 10px;
 }
 
 td{
