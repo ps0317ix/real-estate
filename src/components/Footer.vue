@@ -5,7 +5,7 @@
       <li>
         <router-link to="/about" class="footer-text-link">About</router-link>
       </li>
-      <template v-if="isAuthenticated">
+      <template v-if="isAuthenticated==true">
         <li>
           <router-link to="/user" class="footer-text-link">ユーザー</router-link>
         </li>
@@ -35,6 +35,10 @@ export default {
   computed: {
     isAuthenticated(){
       return this.$store.getters.idToken !== null;
+    },
+    isAdministrator(){
+      const admin = localStorage.getItem('admin');
+      return admin === 'true';
     }
   },
   methods: {

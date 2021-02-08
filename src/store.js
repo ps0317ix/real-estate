@@ -46,7 +46,6 @@ export default new Vuex.Store({
                     returnSecureToken: true
                 })
                 .then(response => {
-                    console.log(response);
                     dispatch('setAuthData', {
                         displayName: response.data.displayName,
                         idToken: response.data.idToken,
@@ -55,9 +54,10 @@ export default new Vuex.Store({
                     });
                     if(authData.email!="exam@exam.com"){
                         console.log('ログイン成功');
+                        localStorage.setItem('admin', 'false');
                         router.push('/user');
                     }else{
-                        localStorage.setItem('admin', true);
+                        localStorage.setItem('admin', 'true');
                         router.push('/administrator');
                     }
                 });

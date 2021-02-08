@@ -1,11 +1,21 @@
 <template>
   <table>
     <tr>
+      <td><h2>物件ID：</h2></td>
       <td><p>{{ $route.params.id }}</p></td>
     </tr>
     <tr>
-      <td><p>{{ name }}</p></td>
+      <td><img :src="image"></td>
     </tr>
+    <tr>
+      <td><h2>物件名：</h2></td>
+      <td><input type="text" :value="estateName"></td>
+    </tr>
+    <tr>
+      <td><h2>物件概要：</h2></td>
+      <td><textarea type="text" :value="description"></textarea></td>
+    </tr>
+    
   </table>
 </template>
 
@@ -16,24 +26,21 @@ export default {
   data(){
     return{
       props: ["id"],
-      estates: [],
-      estateName: "",
-      contactEmail: "",
-      detail: "",
-      posts: [],
+      estateName: '',
+      image: '',
+      description: ''
     }
   },
   created(){
-    console.log(this.$route.params.id);
+    let self = this
     const db = firebase.firestore()
     const dbEstate = db.collection('estate').doc(this.$route.params.id)
     dbEstate.get().then(function(doc) {
       if (doc.exists){
-        // Convert to City object
         var data = doc.data();
-        // Use a City instance method
-        console.log(data);
-        this.estateName = doc.estateName
+        self.estateName = data.estateName
+        self.image = data.image
+        self.description = data.description
       } else {
         console.log("No such document!");
       }}).catch(function(error) {
@@ -54,6 +61,11 @@ export default {
 
 .estate-tr{
   height: 100px;
+}
+
+tr{
+  padding: 10px;
+  margin: 10px;
 }
 
 td{

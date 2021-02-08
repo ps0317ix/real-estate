@@ -20,7 +20,6 @@ export default {
   },
   created() {
     this.displayName = localStorage.getItem('displayName');
-    console.log(this.displayName);
   },
   computed: {
     isAuthenticated() {
