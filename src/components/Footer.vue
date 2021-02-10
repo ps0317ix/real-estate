@@ -2,16 +2,28 @@
   <footer>
     <h1><router-link to="/" class="footer-link">{{ msg }}</router-link></h1>
     <ul>
-      <li>
-        <router-link to="/about" class="footer-text-link">About</router-link>
-      </li>
-      <template v-if="isAuthenticated==true">
+      <template v-if="!isAuthenticated">
         <li>
-          <router-link to="/user" class="footer-text-link">ユーザー</router-link>
+          <router-link to="/about" class="footer-text-link">About</router-link>
         </li>
-        <li>
-          <a @click="logout" class="footer-text-link">ログアウト</a>
-        </li>
+      </template>
+      <template v-if="isAuthenticated">
+        <template v-if="isAdministrator=='true'">
+          <li>
+            <router-link to="/administrator" class="footer-text-link">管理者ホーム</router-link>
+          </li>
+          <li>
+            <router-link to="/administrator/estatecreate" class="footer-text-link">不動産情報登録</router-link>
+          </li>
+        </template>
+        <template v-if="isAdministrator!='true'">
+          <li>
+            <router-link to="/user" class="footer-text-link">ユーザー</router-link>
+          </li>
+        </template>
+          <li>
+            <a @click="logout" class="footer-text-link">ログアウト</a>
+          </li>
       </template>
       <template v-if="!isAuthenticated">
         <li>
@@ -37,8 +49,8 @@ export default {
       return this.$store.getters.idToken !== null;
     },
     isAdministrator(){
-      const admin = localStorage.getItem('admin');
-      return admin === 'true';
+      const admin = localStorage.getItem('admin')
+      return admin
     }
   },
   methods: {

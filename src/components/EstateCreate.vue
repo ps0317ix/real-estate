@@ -4,54 +4,312 @@
       <h2>管理者さま、こんにちは</h2>
     </div>
     <div class="form">
-      <label for="estatename">物件名：</label>
-      <input
+      <label for="estatename">物件名：<span style="color:red;">*必須</span></label>
+    <div class="form_content">
+     <input
         type="text"
         v-model="estate.estateName"
+        placeholder="例：セイワパレス新梅田"
         class="input"
       >
-      <label for="image">画像：</label>
+    </div>
+    <label for="image">画像：</label>
+    <input
+           v-if="reset"
+           @change="upload"
+           type="file"
+           >
+    <label for="prefecture">住所（都道府県）：<span style="color:red;">*必須</span></label>
+    <div class="form_content">
+    <!-- <input
+           type="text"
+           v-model="estate.prefecture"
+           placeholder="例：大阪府"
+           class="input"
+           > -->
+      <select v-model="estate.prefecture" placeholder="例：大阪府" class="input">
+        <option value="">選択してください</option>
+        <option v-for="(pref, index) in prefs" :key="index">{{pref}}</option>
+      </select>
+    </div>
+    <label for="municipalities">住所（市区町村）：<span style="color:red;">*必須</span></label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.municipalities"
+           placeholder="例：大阪市北区"
+           class="input"
+           >
+    </div>
+    <label for="address">住所（町名）：<span style="color:red;">*必須</span></label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.address"
+           placeholder="例：大淀中"
+           class="input"
+           >
+    </div>
+    <label for="addressnum">住所（番地以下）：</label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.addressnum"
+           placeholder="例：1-13-4 (半角)"
+           class="input"
+           >
+    </div>
+    <label for="line">最寄路線1：<span style="color:red;">*必須</span></label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.line"
+           placeholder="例：東海道本線"
+           class="input"
+           >
+    </div>
+    <label for="station">最寄駅1：<span style="color:red;">*必須</span></label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.station"
+           placeholder="例：大阪駅"
+           class="input"
+           >
+    </div>
+    <label for="rent">賃料：</label>
+    <div class="form_content">
+    <input
+           type="number"
+           v-model="estate.rent"
+           placeholder="例：115000"
+           class="input"
+           ><p>円</p>
+    </div>
+    <label for="walk">徒歩：</label>
+    <div class="form_content">
+    <input
+           type="number"
+           v-model="estate.walk"
+           placeholder="例：5"
+           class="input"
+           ><p>分</p>
+    </div>
+    <label for="manage">管理費・共益費：</label>
+    <div class="form_content">
+    <input
+           type="number"
+           v-model="estate.manage"
+           placeholder="例：10000"
+           class="input"
+           ><p>円</p>
+    </div>
+    <label for="deposit">敷金：</label>
+    <div class="form_content">
+    <input
+           type="number"
+           v-model="estate.deposit"
+           placeholder="例：1"
+           class="input"
+           ><p>ヶ月</p>
+    </div>
+    <label for="keymoney">礼金：</label>
+    <div class="form_content">
+    <input
+           type="number"
+           v-model="estate.keymoney"
+           placeholder="例：1"
+           class="input"
+           ><p>ヶ月</p>
+    </div>
+    <label for="freerent">フリーレント：</label>
+    <div class="form_content">
+    <input
+           type="number"
+           v-model="estate.freerent"
+           placeholder="例：1"
+           class="input"
+           ><p>ヶ月</p>
+    </div>
+    <label for="insurance">保険料：</label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.insurance"
+           placeholder="例：要加入"
+           class="input"
+           >
+    </div>
+    <label for="insurancecompany">保証会社：</label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.insurancecompany"
+           placeholder="例：要加入"
+           class="input"
+           >
+    </div>
+    <label for="securitydeposit">保証金：</label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.securitydeposit"
+           placeholder=""
+           class="input"
+           value="-"
+           >
+    </div>
+    <label for="floor">間取り：</label>
+    <div class="form_content">
+    <input
+           type="text"
+           v-model="estate.floor"
+           placeholder="例：1LDK"
+           class="input"
+           >
+    </div>
+    <label for="occupiedarea">専有面積：</label>
+    <div class="form_content">
       <input
-        v-if="reset"
-        @change="upload"
-        type="file"
-      >
-      <label for="address">住所：</label>
+           type="number"
+           v-model="estate.occupiedarea"
+           placeholder="例：41.45"
+           class="input"
+           ><p>
+             ㎡
+           </p>
+    </div>
+    <label for="year">築年：</label>
+    <div class="form_content">
       <input
-        type="text"
-        v-model="estate.address"
-        class="input"
-      >
-      <label for="station">最寄駅：</label>
+           type="number"
+           v-model="estate.year"
+           placeholder="例：2021"
+           class="input"
+           ><p>
+             年
+           </p>
+    </div>
+    <label for="direction">方角：</label>
+    <div class="form_content">
       <input
-        type="text"
-        v-model="estate.address"
-        class="input"
-      >
-      <label for="rent">賃料：</label>
+           type="text"
+           v-model="estate.direction"
+           placeholder="例：南東"
+           class="input"
+           >
+    </div>
+    <label for="renttype">賃借種別：</label>
+    <div class="form_content">
       <input
-        type="text"
-        v-model="estate.rent"
-        class="input"
-      >
-      <label for="manage">管理費・共益費：</label>
+           type="text"
+           v-model="estate.renttype"
+           placeholder="例：普通賃貸借"
+           class="input"
+           >
+    </div>
+    <label for="features">物件特徴：</label>
+    <div class="form_content">
       <input
-        type="text"
-        v-model="estate.manage"
-        class="input"
-      >
-      <label for="deposit">敷金・礼金：</label>
+           type="text"
+           v-model="estate.features"
+           placeholder="例：ハイクラス"
+           class="input"
+           >
+    </div>
+    <label for="impossible">不可事項：</label>
+    <div class="form_content">
       <input
-        type="text"
-        v-model="estate.deposit"
-        class="input"
-      >
-      <label for="description">物件概要：</label>
+           type="text"
+           v-model="estate.impossible"
+           placeholder="例：ペット不可"
+           class="input"
+           >
+    </div>
+    <label for="movein">入居日：</label>
+    <div class="form_content">
       <input
+           type="text"
+           v-model="estate.movein"
+           placeholder="例：3月上旬"
+           class="input"
+           >
+    </div>
+    <label for="construction">構造：</label>
+    <div class="form_content">
+      <input
+           type="text"
+           v-model="estate.construction"
+           placeholder="例：RC造(鉄筋コンクリート)"
+           class="input"
+           >
+    </div>
+    <label for="floornum">所在階：</label>
+    <div class="form_content">
+      <input
+           type="number"
+           v-model="estate.floornum"
+           placeholder="例：9"
+           class="input"
+           ><p>
+           階
+           </p>
+    </div>
+    <label for="floormax">総階数(地上)：</label>
+    <div class="form_content">
+      <input
+           type="text"
+           v-model="estate.floormax"
+           placeholder="例：9"
+           class="input"
+           >
+    </div>
+    <label for="floormin">総階数(地下)：</label>
+    <div class="form_content">
+      <input
+           type="text"
+           v-model="estate.floormin"
+           placeholder="例：2"
+           class="input"
+           >
+    </div>
+    <label for="roomcnt">総戸数：</label>
+    <div class="form_content">
+      <input
+           type="text"
+           v-model="estate.roomcnt"
+           placeholder="例：50"
+           class="input"
+           >
+    </div>
+    <label for="elevator">エレベーター有無：</label>
+    <div class="form_content">
+      <input
+           type="text"
+           v-model="estate.elevator"
+           placeholder="例：有・無"
+           class="input"
+           >
+    </div>
+    <label for="transaction">取引形態：</label>
+    <div class="form_content">
+      <input
+           type="text"
+           v-model="estate.transaction"
+           placeholder="例：仲介"
+           class="input"
+           >
+    </div>
+    
+    <label for="description">備考：</label>
+    <div class="form_content">
+    <textarea
         type="text"
         v-model="estate.description"
-        class="input"
-      >
+        placeholder="例：仲介"        
+        class="textarea"
+      ></textarea>
+    </div>
       <button @click="entryEstate()" class="button is-info">登録</button>
       <br /><br />
       <ul v-for="errormessage in errormessages" :key="errormessage.index">
@@ -81,18 +339,55 @@ export default {
     return{
       entryDocId: "",
       errormessages: [],
+      selected_area: "",
+      selected_pref : "",
+      selected_prefs: [],
       reset: true,
       estate: {
-        estateName: "",
+        estateName: '',
         image: '',
+        prefecture: '',
+        municipalities: '',
         address: '',
-        rent: '',
-        manage: '',
-        deposit: '',
-        description: "",
+        addressnum: '',
+        line: '',
+        station: '',
+        walk: 0,
+        rent: 0,
+        manage: 0,
+        deposit: 0,
+        keymoney: 0,
+        freerent: 0,
+        insurance: '',
+        insurancecompany: '',
+        securitydeposit: '',
+        floor: '',
+        occupiedarea: 0,
+        year: 0,
+        direction: '',
+        renttype: '',
+        features: '',
+        impossible: '',
+        movein: '',
+        construction: '',
+        floornum: 0,
+        floormax: 0,
+        floormin: 0,
+        roomcnt: '',
+        elevator: '',
+        transaction: '',
+        description: '',
       },
       errors: []
     }
+  },
+  computed: {
+    areas(){
+      return this.$store.state.area
+    },
+    prefs(){
+      return this.$store.state.pref
+    },
   },
   methods: {
     upload(e) {
@@ -124,10 +419,18 @@ export default {
         this.reset = true
       })
     },
+    _set_area : function(){
+      this.selected_pref = "";
+      this.selected_prefs = this.pref[this.selected_area];
+    },
     entryEstate() {
       let self = this
-      if (!self.estate.estateName || !self.estate.description) {
-        this.errormessages.push('物件名と物件概要は必須です')
+      if (!self.estate.estateName){
+        this.errormessages.push('物件名は必須です')
+        console.log(this.errormessages);
+        return this.errormessages
+      }else if (!self.estate.prefecture||!self.estate.municipalities||!self.estate.address){
+        this.errormessages.push('住所は必須です')
         console.log(this.errormessages);
         return this.errormessages
       }
@@ -136,17 +439,76 @@ export default {
         dbEstate
           .add({
             estateName: self.estate.estateName,
-            description: self.estate.description,
             image: self.estate.image,
+            prefecture: self.estate.prefecture,
+            municipalities: self.estate.municipalities,
+            address: self.estate.address,
+            addressnum: self.estate.addressnum,
+            line: self.estate.line,
+            station: self.estate.station,
+            walk: self.estate.walk,
+            rent: self.estate.rent,
+            manage: self.estate.manage,
+            deposit: self.estate.deposit,
+            keymoney: self.estate.keymoney,
+            freerent: self.estate.freerent,
+            insurance: self.estate.insurance,
+            insurancecompany: self.estate.insurancecompany,
+            securitydeposit: self.estate.securitydeposit,
+            floor: self.estate.floor,
+            occupiedarea: self.estate.occupiedarea,
+            year: self.estate.year,
+            direction: self.estate.direction,
+            renttype: self.estate.renttype,
+            features: self.estate.features,
+            impossible: self.estate.impossible,
+            movein: self.estate.movein,
+            construction: self.estate.construction,
+            floornum: self.estate.floornum,
+            floormax: self.estate.floormax,
+            floormin: self.estate.floormin,
+            roomcnt: self.estate.roomcnt,
+            elevator: self.estate.elevator,
+            transaction: self.estate.transaction,
+            description: self.estate.description,
             time: firebase.firestore.Timestamp.now()
           })
           .then((docRef) => {
             console.log(docRef.id);
             self.entryDocId = docRef.id
             self.estate.estateName = ''
-            self.estate.description = ''
-            
             self.estate.image = ''
+            self.estate.prefecture = ''
+            self.estate.municipalities = ''
+            self.estate.address = ''
+            self.estate.addressnum = ''
+            self.estate.line = ''
+            self.estate.station = ''
+            self.estate.walk = 0
+            self.estate.rent = ''
+            self.estate.manage = ''
+            self.estate.deposit = ''
+            self.estate.keymoney = ''
+            self.estate.freerent = ''
+            self.estate.insurance = ''
+            self.estate.insurancecompany = ''
+            self.estate.securitydeposit = ''
+            self.estate.floor = ''
+            self.estate.occupiedarea = ''
+            self.estate.year = ''
+            self.estate.direction = ''
+            self.estate.renttype = ''
+            self.estate.features = ''
+            self.estate.impossible = ''
+            self.estate.movein = ''
+            self.estate.construction = ''
+            self.estate.floornum = ''
+            self.estate.floormax = ''
+            self.estate.floor = ''
+            self.estate.roomcnt = ''
+            self.estate.elevator = ''
+            self.estate.transaction = ''
+            self.estate.description = ''
             self.inputFileReset()
           })
           .catch((error) => {

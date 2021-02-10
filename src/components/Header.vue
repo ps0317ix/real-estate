@@ -2,9 +2,11 @@
   <header>
     <h1><router-link to="/">{{ msg }}</router-link></h1>
     <ul>
-      <li>
-        <router-link to="/about" class="header-text-link">About</router-link>
-      </li>
+      <template v-if="!isAuthenticated">
+        <li>
+          <router-link to="/about" class="header-text-link">About</router-link>
+        </li>
+      </template>
       <template v-if="isAuthenticated">
         <template v-if="isAdministrator=='true'">
           <li>
@@ -48,7 +50,6 @@ export default {
     },
     isAdministrator(){
       const admin = localStorage.getItem('admin')
-      console.log(admin);
       return admin
     }
   },

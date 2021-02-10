@@ -16,6 +16,7 @@ Vue.directive("border", function(el, binding){
   el.style.borderStyle = binding.arg;
 });
 
+
 // axiosを用いる際のbaseURL
 axios.defaults.baseURL = "https://firestore.googleapis.com/v1/projects/real-estate-4ff0d/databases/(default)/documents/";
 
@@ -46,6 +47,16 @@ axios.interceptors.request.eject(interceptorsRequest);
 axios.interceptors.response.eject(interceptorsResponse);
 
 
+
+/**
+ * 金額をカンマ区切りに表示します。
+ * @param val 金額
+ */
+Vue.filter('addComma', function(val){
+	return val.toLocaleString();
+});
+
+// firebaseの初期化設定
 firebase.initializeApp(firebaseConfig);
 
 store.dispatch('autoLogin').then(() => {

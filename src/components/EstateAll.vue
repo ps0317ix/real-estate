@@ -1,20 +1,24 @@
 <template>
-  <table class="estate-table">
-    <tr>
-      <td style="padding: 10px;">物件id</td>
-      <td style="padding: 10px;">画像</td>
-      <td style="padding: 10px;"><p>物件名</p></td>
-      <td style="padding: 10px;"><p>物件概要</p></td>
-    </tr>
-    <tr class="estate-tr" v-for="estate in estates" :key="estate.index">
-      <td><p>{{estate.entryDocId}}</p></td>
-      <td><img :src="estate.image" v-bind:alt="estate.estateName"></td>
-      <td><p>{{estate.estateName}}</p></td>
-      <td><p>{{estate.description}}</p></td>
-      <td><router-link :to='linktoedit(estate.entryDocId)' class="button is-info">編集</router-link></td>
-      <td><router-link :to='linktodelete(estate.entryDocId)' class="button is-danger">削除</router-link></td>
-    </tr>
-  </table>
+  <div class="table__wrapper">
+    <table class="table is-bordered pricing__table is-fullwidth">
+      <tr>
+        <td style="padding: 10px;"><p>物件id</p></td>
+        <td style="padding: 10px;"><p>画像</p></td>
+        <td style="padding: 10px;"><p>物件名</p></td>
+        <td style="padding: 10px;"><p>物件概要</p></td>
+        <td style="padding: 10px;"><p></p></td>
+        <td style="padding: 10px;"><p></p></td>
+      </tr>
+      <tr class="estate-tr" v-for="estate in estates" :key="estate.index">
+        <td><p>{{estate.entryDocId}}</p></td>
+        <td><img :src="estate.image" v-bind:alt="estate.estateName"></td>
+        <td><p>{{estate.estateName}}</p></td>
+        <td><p>{{estate.description}}</p></td>
+        <td><router-link :to='linktoedit(estate.entryDocId)' class="button is-info">編集</router-link></td>
+        <td><router-link :to='linktodelete(estate.entryDocId)' class="button is-danger">削除</router-link></td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -69,7 +73,7 @@ export default {
 }
 
 td{
-  padding: 0px 10px;
+  padding: 10px;
 }
 
 td img{

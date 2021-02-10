@@ -1,12 +1,14 @@
 <template>
   <div class="estateedit">
     <h1>物件情報編集</h1>
-    <table>
+    <div class="table__wrapper">
+      <table class="table is-bordered pricing__table is-fullwidth">
       <tr>
         <td><h2>物件ID：</h2></td>
         <td><p>{{ $route.params.id }}</p></td>
       </tr>
       <tr>
+        <td><h2>物件画像：</h2></td>
         <td><img :src="image"></td>
       </tr>
       <tr>
@@ -17,8 +19,8 @@
         <td><h2>物件概要：</h2></td>
         <td><textarea type="text" :value="description" class="textarea"></textarea></td>
       </tr>
-      
     </table>
+    </div>
   </div>
 </template>
 

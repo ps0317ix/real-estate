@@ -14,11 +14,13 @@
       </transition>
     <div>
       <ul class="estate-lists" v-for="estate in estates" :key="estate.index">
+        <a :href="estate.entryDocId">
         <li class="estate-list">
           <img :src="estate.image" v-bind:alt="estate.estateName">
-          <p>{{estate.estateName}}</p>
-          <p>{{estate.description}}</p>
+          <h3>{{estate.estateName}}</h3>
+          <p>賃料 ¥{{estate.rent | addComma}}<br>{{estate.line}} {{estate.station}}</p>
         </li>
+        </a>
       </ul>
     </div>
       
@@ -88,8 +90,12 @@ export default {
         console.log(doc);
         const data = doc.data()
         const estate = {
-          image: data.image,
+          entryDocId: doc.id,
           estateName: data.estateName,
+          image: data.image,
+          line: data.line,
+          station: data.station,
+          rent: data.rent,
           description: data.description,
         }
         console.log(estate);
@@ -185,5 +191,23 @@ a {
 
 .estate-list{
   width: 350px;
+  box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+}
+
+.estate-list img{
+  width: 300px;
+  display: block;
+  margin: auto;
+}
+
+.estate-list p{
+  color: black;
+  padding: 10px;
+}
+
+.estate-list h3{
+  color: black;
+  padding: 10px;
+  margin: 10px 0px 0px 0px;
 }
 </style>
