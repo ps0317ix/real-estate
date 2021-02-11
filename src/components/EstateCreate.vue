@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div>
-      <h2>管理者さま、こんにちは</h2>
-    </div>
     <div class="form">
+    <h2>情報がない場合は「-」にしてください</h2>
       <label for="estatename">物件名：<span style="color:red;">*必須</span></label>
     <div class="form_content">
      <input
@@ -21,12 +19,6 @@
            >
     <label for="prefecture">住所（都道府県）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
-    <!-- <input
-           type="text"
-           v-model="estate.prefecture"
-           placeholder="例：大阪府"
-           class="input"
-           > -->
       <select v-model="estate.prefecture" placeholder="例：大阪府" class="input">
         <option value="">選択してください</option>
         <option v-for="(pref, index) in prefs" :key="index">{{pref}}</option>
@@ -34,12 +26,16 @@
     </div>
     <label for="municipalities">住所（市区町村）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
-    <input
+      <select v-model="estate.municipalities" placeholder="例：大阪市北区" class="input">
+        <option value="">選択してください</option>
+        <option v-for="(municipality, index) in municipalities" :key="index">{{municipality}}</option>
+      </select>
+    <!-- <input
            type="text"
            v-model="estate.municipalities"
            placeholder="例：大阪市北区"
            class="input"
-           >
+           > -->
     </div>
     <label for="address">住所（町名）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
@@ -388,6 +384,9 @@ export default {
     prefs(){
       return this.$store.state.pref
     },
+    municipalities(){
+      return this.$store.state.municipalities
+    }
   },
   methods: {
     upload(e) {
@@ -421,7 +420,7 @@ export default {
     },
     _set_area : function(){
       this.selected_pref = "";
-      this.selected_prefs = this.pref[this.selected_area];
+      this.selected_prefs = this.prefs[this.selected_area];
     },
     entryEstate() {
       let self = this

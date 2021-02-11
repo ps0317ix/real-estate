@@ -14,13 +14,18 @@
       </transition>
     <div>
       <ul class="estate-lists" v-for="estate in estates" :key="estate.index">
-        <a :href="estate.entryDocId">
-        <li class="estate-list">
-          <img :src="estate.image" v-bind:alt="estate.estateName">
-          <h3>{{estate.estateName}}</h3>
-          <p>賃料 ¥{{estate.rent | addComma}}<br>{{estate.line}} {{estate.station}}</p>
-        </li>
-        </a>
+        <transition
+        name="fade"
+        appear
+        >
+          <a :href="estate.entryDocId">
+          <li class="estate-list">
+            <img :src="estate.image" v-bind:alt="estate.estateName">
+            <h3>{{estate.estateName}}</h3>
+            <p>賃料 ¥{{estate.rent | addComma}}<br>{{estate.line}} {{estate.station}}</p>
+          </li>
+          </a>
+        </transition>
       </ul>
     </div>
       
@@ -190,12 +195,12 @@ a {
 }
 
 .estate-list{
-  width: 350px;
+  width: 220px;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
 }
 
 .estate-list img{
-  width: 300px;
+  width: 200px;
   display: block;
   margin: auto;
 }

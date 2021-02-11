@@ -5,7 +5,9 @@
         <td style="padding: 10px;"><p>物件id</p></td>
         <td style="padding: 10px;"><p>画像</p></td>
         <td style="padding: 10px;"><p>物件名</p></td>
-        <td style="padding: 10px;"><p>物件概要</p></td>
+        <td style="padding: 10px;"><p>都道府県</p></td>
+        <td style="padding: 10px;"><p>市区町村</p></td>
+        <td style="padding: 10px;"><p>町名</p></td>
         <td style="padding: 10px;"><p></p></td>
         <td style="padding: 10px;"><p></p></td>
       </tr>
@@ -13,7 +15,9 @@
         <td><p>{{estate.entryDocId}}</p></td>
         <td><img :src="estate.image" v-bind:alt="estate.estateName"></td>
         <td><p>{{estate.estateName}}</p></td>
-        <td><p>{{estate.description}}</p></td>
+        <td><p>{{estate.prefecture}}</p></td>
+        <td><p>{{estate.municipalities}}</p></td>
+        <td><p>{{estate.address}}</p></td>
         <td><router-link :to='linktoedit(estate.entryDocId)' class="button is-info">編集</router-link></td>
         <td><router-link :to='linktodelete(estate.entryDocId)' class="button is-danger">削除</router-link></td>
       </tr>
@@ -28,10 +32,6 @@ export default {
   data(){
       return{
         estates: [],
-        name: "",
-        contactEmail: "",
-        detail: "",
-        posts: [],
       }
   },
   created() {
@@ -44,6 +44,9 @@ export default {
           entryDocId: doc.id,
           image: data.image,
           estateName: data.estateName,
+          prefecture: data.prefecture,
+          municipalities: data.municipalities,
+          address: data.address,
           description: data.description,
           time: data.time,
         }
