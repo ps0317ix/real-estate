@@ -17,6 +17,15 @@
            @change="upload"
            type="file"
            >
+    <label for="introduction">紹介文：</label>
+    <div class="form_content">
+    <textarea
+        type="text"
+        v-model="estate.introduction"
+        placeholder="例：このマンションは高級感溢れる物件です。"        
+        class="textarea"
+      ></textarea>
+    </div>
     <label for="prefecture">住所（都道府県）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
       <select v-model="estate.prefecture" placeholder="例：大阪府" class="input">
@@ -342,6 +351,7 @@ export default {
       estate: {
         estateName: '',
         image: '',
+        introduction: '',
         prefecture: '',
         municipalities: '',
         address: '',
@@ -439,6 +449,7 @@ export default {
           .add({
             estateName: self.estate.estateName,
             image: self.estate.image,
+            introduction: self.estate.introduction,
             prefecture: self.estate.prefecture,
             municipalities: self.estate.municipalities,
             address: self.estate.address,
@@ -477,6 +488,7 @@ export default {
             self.entryDocId = docRef.id
             self.estate.estateName = ''
             self.estate.image = ''
+            self.estate.introduction = ''
             self.estate.prefecture = ''
             self.estate.municipalities = ''
             self.estate.address = ''

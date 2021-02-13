@@ -9,7 +9,12 @@
         <li><router-link to="/administrator/estateall" class="admin-text-link">不動産情報一覧(編集・削除)</router-link></li>
         <li><router-link to="/administrator/estatecreate" class="admin-text-link">不動産情報登録</router-link></li>
       </ul>
+      <transition
+       name="fade"
+       appear
+      >
       <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>

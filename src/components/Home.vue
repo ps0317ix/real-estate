@@ -18,7 +18,7 @@
         name="fade"
         appear
         >
-          <a :href="estate.entryDocId">
+          <a :href="linktodetail(estate.entryDocId)">
           <li class="estate-list">
             <img :src="estate.image" v-bind:alt="estate.estateName">
             <h3>{{estate.estateName}}</h3>
@@ -118,6 +118,10 @@ export default {
       });
   },
   methods: {
+    linktodetail(link){
+      var detaillink = '/estate/' + link
+      return detaillink
+    },
     createContacts() {
       axios
         .post(

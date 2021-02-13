@@ -6,6 +6,10 @@ import store from './store';
 import axios from "axios";
 import firebase from 'firebase';
 import { firebaseConfig } from '../plugins/firebase';
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
+
+Vue.use(VueAwesomeSwiper)
 
 Vue.config.productionTip = false;
 Vue.component("Header", Header);
@@ -58,6 +62,8 @@ Vue.filter('addComma', function(val){
 
 // firebaseの初期化設定
 firebase.initializeApp(firebaseConfig);
+
+
 
 store.dispatch('autoLogin').then(() => {
   new Vue({

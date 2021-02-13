@@ -11,6 +11,7 @@ import AdminHome from './components/AdminHome.vue';
 import EstateCreate from './components/EstateCreate.vue';
 import EstateAll from './components/EstateAll.vue';
 import EstateEdit from './components/EstateEdit.vue';
+import EstateDetail from './components/EstateDetail.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -63,6 +64,13 @@ export default new Router({
                 }
             }}
         ]},
+        {path: '/estate',
+         component: EstateDetail
+        },
+        {path: '/estate/:id', 
+         component: EstateDetail,
+         props: true
+        },
         {path: '/administrator',
          component: Administrator,
          children: [
