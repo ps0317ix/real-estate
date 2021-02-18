@@ -12,7 +12,7 @@
           v-model="email"
           class="input"
         >
-        <label for="password">パスワード</label>
+        <label for="password">パスワード：</label>
         <input 
           id="password"
           type="password"

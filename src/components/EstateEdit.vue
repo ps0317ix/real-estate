@@ -1,4 +1,8 @@
 <template>
+<transition
+       name="fade"
+       appear
+      >
   <div class="estateedit">
     <h1>物件情報編集</h1>
     <div class="table__wrapper">
@@ -22,6 +26,7 @@
     </table>
     </div>
   </div>
+</transition>
 </template>
 
 <script>

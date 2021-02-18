@@ -9,9 +9,20 @@
        appear
       >
         <div class="our_service">
-          <h2>OUR SERVICE</h2>
+          <h2>人気エリア</h2>
+          <ul>
+            <li>中目黒</li>
+            <li>恵比寿</li>
+            <li>代々木上原</li>
+            <li>勝どき</li>
+            <li>品川</li>
+            <li>大崎</li>
+          </ul>
         </div>
+        
       </transition>
+      
+      <h2>おすすめ物件</h2>
     <div>
       <ul class="estate-lists" v-for="estate in estates" :key="estate.index">
         <transition
@@ -191,6 +202,11 @@ a {
   line-height: 100px;
   padding: 0px 0px 0px 10px;
   box-shadow: 0 10px 25px 0 rgba(0, 0, 0, .5);
+}
+
+.our_service h2{
+  font-size: 24px;
+  text-align: center;
 }
 
 .estate-lists{

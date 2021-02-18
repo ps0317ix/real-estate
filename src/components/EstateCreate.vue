@@ -1,4 +1,8 @@
 <template>
+<transition
+       name="fade"
+       appear
+      >
   <div>
     <div class="form">
     <h2>情報がない場合は「-」にしてください</h2>
@@ -306,6 +310,26 @@
            >
     </div>
     
+    <label for="facilities">物件設備：</label>
+    <div class="form_facilities_content">
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="ペット可">
+      <label for="ペット可">ペット可</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="楽器可">
+      <label for="楽器可">楽器可</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="スポーツジム">
+      <label for="スポーツジム">スポーツジム</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="駐車場">
+      <label for="駐車場">駐車場</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="オートロック">
+      <label for="オートロック">オートロック</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="宅配ボックス">
+      <label for="宅配ボックス">宅配ボックス</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="24時間管理">
+      <label for="24時間管理">24時間管理</label>
+      <input type="checkbox" v-model="estate.facilities" class="checkbox" value="ラウンジ">
+      <label for="ラウンジ">ラウンジ</label>
+    </div>
+
     <label for="description">備考：</label>
     <div class="form_content">
     <textarea
@@ -334,6 +358,7 @@
       </div>
     </div>
   </div>
+</transition>
 </template>
 
 <script>
@@ -382,6 +407,7 @@ export default {
         roomcnt: '',
         elevator: '',
         transaction: '',
+        facilities: [],
         description: '',
       },
       errors: []
@@ -480,6 +506,7 @@ export default {
             roomcnt: self.estate.roomcnt,
             elevator: self.estate.elevator,
             transaction: self.estate.transaction,
+            facilities: self.estate.facilities,
             description: self.estate.description,
             time: firebase.firestore.Timestamp.now()
           })
@@ -519,6 +546,7 @@ export default {
             self.estate.roomcnt = ''
             self.estate.elevator = ''
             self.estate.transaction = ''
+            self.estate.facilities = ''
             self.estate.description = ''
             self.inputFileReset()
           })
@@ -536,5 +564,19 @@ export default {
 
 .fv_image{
   background-image: url('../assets/pixta_64405275_M.jpg');
+}
+
+.form_facilities_content{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form input.checkbox {
+  width: 20px;
+  margin: 5px 3px 5px 8px;
+}
+
+.form_facilities_content label{
+  padding: 0px;
 }
 </style>

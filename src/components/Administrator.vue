@@ -3,19 +3,19 @@
     <div class="fv_image">
       <h1 class="fv_image_title">管理者</h1>
     </div>
+    <transition
+       name="fade"
+       appear
+      >
     <div class="container">
       <ul class="admin-text-links">
         <li><router-link to="/administrator/adminhome" class="admin-text-link">管理者ホーム</router-link></li>
         <li><router-link to="/administrator/estateall" class="admin-text-link">不動産情報一覧(編集・削除)</router-link></li>
         <li><router-link to="/administrator/estatecreate" class="admin-text-link">不動産情報登録</router-link></li>
       </ul>
-      <transition
-       name="fade"
-       appear
-      >
       <router-view></router-view>
-      </transition>
     </div>
+    </transition>
   </div>
 </template>
 
