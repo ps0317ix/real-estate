@@ -12,6 +12,7 @@ import EstateCreate from './components/EstateCreate.vue';
 import EstateAll from './components/EstateAll.vue';
 import EstateEdit from './components/EstateEdit.vue';
 import EstateDetail from './components/EstateDetail.vue';
+import importcsv from './components/importcsv.vue';
 import store from './store';
 
 Vue.use(Router);
@@ -94,6 +95,15 @@ export default new Router({
             }},
             {path: 'estateall',
             component: EstateAll,
+            beforeEnter(to, from, next){
+                if(store.getters.idToken){
+                    next();
+                }else{
+                    next('/login');
+                }
+            }},
+            {path: 'importcsv',
+            component: importcsv,
             beforeEnter(to, from, next){
                 if(store.getters.idToken){
                     next();

@@ -211,6 +211,7 @@ a {
 
 .estate-lists{
   display: flex;
+  flex-wrap: wrap;
   margin: 50px 0px;
 }
 

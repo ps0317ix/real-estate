@@ -12,6 +12,7 @@
         <li><router-link to="/administrator/adminhome" class="admin-text-link">管理者ホーム</router-link></li>
         <li><router-link to="/administrator/estateall" class="admin-text-link">不動産情報一覧(編集・削除)</router-link></li>
         <li><router-link to="/administrator/estatecreate" class="admin-text-link">不動産情報登録</router-link></li>
+        <li><router-link to="/administrator/importcsv" class="admin-text-link">CSVインポート</router-link></li>
       </ul>
       <router-view></router-view>
     </div>
