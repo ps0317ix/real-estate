@@ -18,6 +18,7 @@
         <td><p>{{estate.prefecture}}</p></td>
         <td><p>{{estate.municipalities}}</p></td>
         <td><p>{{estate.address}}</p></td>
+        <td><router-link :to='linktoopen(estate.entryDocId)' class="button is-success">公開</router-link></td>
         <td><router-link :to='linktoedit(estate.entryDocId)' class="button is-info">編集</router-link></td>
         <td><router-link :to='linktodelete(estate.entryDocId)' class="button is-danger">削除</router-link></td>
       </tr>

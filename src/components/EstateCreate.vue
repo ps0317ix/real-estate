@@ -330,6 +330,14 @@
       <label for="ラウンジ">ラウンジ</label>
     </div>
 
+    <label for="openclose">公開設定：</label>
+    <div class="form_content">
+      <input type="checkbox" v-model="estate.openclose" class="checkbox" value="open" checked>
+      <label for="open">公開</label>
+      <input type="checkbox" v-model="estate.openclose" class="checkbox" value="close">
+      <label for="close">非公開</label>
+    </div>
+
     <label for="description">備考：</label>
     <div class="form_content">
     <textarea
@@ -408,6 +416,7 @@ export default {
         elevator: '',
         transaction: '',
         facilities: [],
+        openclose: '',
         description: '',
       },
       errors: []
@@ -469,91 +478,93 @@ export default {
         console.log(this.errormessages);
         return this.errormessages
       }
-        const db = firebase.firestore()
-        const dbEstate = db.collection('estate')
-        dbEstate
-          .add({
-            estateName: self.estate.estateName,
-            image: self.estate.image,
-            introduction: self.estate.introduction,
-            prefecture: self.estate.prefecture,
-            municipalities: self.estate.municipalities,
-            address: self.estate.address,
-            addressnum: self.estate.addressnum,
-            line: self.estate.line,
-            station: self.estate.station,
-            walk: self.estate.walk,
-            rent: self.estate.rent,
-            manage: self.estate.manage,
-            deposit: self.estate.deposit,
-            keymoney: self.estate.keymoney,
-            freerent: self.estate.freerent,
-            insurance: self.estate.insurance,
-            insurancecompany: self.estate.insurancecompany,
-            securitydeposit: self.estate.securitydeposit,
-            floor: self.estate.floor,
-            occupiedarea: self.estate.occupiedarea,
-            year: self.estate.year,
-            direction: self.estate.direction,
-            renttype: self.estate.renttype,
-            features: self.estate.features,
-            impossible: self.estate.impossible,
-            movein: self.estate.movein,
-            construction: self.estate.construction,
-            floornum: self.estate.floornum,
-            floormax: self.estate.floormax,
-            floormin: self.estate.floormin,
-            roomcnt: self.estate.roomcnt,
-            elevator: self.estate.elevator,
-            transaction: self.estate.transaction,
-            facilities: self.estate.facilities,
-            description: self.estate.description,
-            time: firebase.firestore.Timestamp.now()
-          })
-          .then((docRef) => {
-            console.log(docRef.id);
-            self.entryDocId = docRef.id
-            self.estate.estateName = ''
-            self.estate.image = ''
-            self.estate.introduction = ''
-            self.estate.prefecture = ''
-            self.estate.municipalities = ''
-            self.estate.address = ''
-            self.estate.addressnum = ''
-            self.estate.line = ''
-            self.estate.station = ''
-            self.estate.walk = 0
-            self.estate.rent = ''
-            self.estate.manage = ''
-            self.estate.deposit = ''
-            self.estate.keymoney = ''
-            self.estate.freerent = ''
-            self.estate.insurance = ''
-            self.estate.insurancecompany = ''
-            self.estate.securitydeposit = ''
-            self.estate.floor = ''
-            self.estate.occupiedarea = ''
-            self.estate.year = ''
-            self.estate.direction = ''
-            self.estate.renttype = ''
-            self.estate.features = ''
-            self.estate.impossible = ''
-            self.estate.movein = ''
-            self.estate.construction = ''
-            self.estate.floornum = ''
-            self.estate.floormax = ''
-            self.estate.floor = ''
-            self.estate.roomcnt = ''
-            self.estate.elevator = ''
-            self.estate.transaction = ''
-            self.estate.facilities = ''
-            self.estate.description = ''
-            self.inputFileReset()
-          })
-          .catch((error) => {
-            console.log(error);
-            self.errormessages.push(error)
-          })
+      const db = firebase.firestore()
+      const dbEstate = db.collection('estate')
+      dbEstate
+        .add({
+          estateName: self.estate.estateName,
+          image: self.estate.image,
+          introduction: self.estate.introduction,
+          prefecture: self.estate.prefecture,
+          municipalities: self.estate.municipalities,
+          address: self.estate.address,
+          addressnum: self.estate.addressnum,
+          line: self.estate.line,
+          station: self.estate.station,
+          walk: self.estate.walk,
+          rent: self.estate.rent,
+          manage: self.estate.manage,
+          deposit: self.estate.deposit,
+          keymoney: self.estate.keymoney,
+          freerent: self.estate.freerent,
+          insurance: self.estate.insurance,
+          insurancecompany: self.estate.insurancecompany,
+          securitydeposit: self.estate.securitydeposit,
+          floor: self.estate.floor,
+          occupiedarea: self.estate.occupiedarea,
+          year: self.estate.year,
+          direction: self.estate.direction,
+          renttype: self.estate.renttype,
+          features: self.estate.features,
+          impossible: self.estate.impossible,
+          movein: self.estate.movein,
+          construction: self.estate.construction,
+          floornum: self.estate.floornum,
+          floormax: self.estate.floormax,
+          floormin: self.estate.floormin,
+          roomcnt: self.estate.roomcnt,
+          elevator: self.estate.elevator,
+          transaction: self.estate.transaction,
+          facilities: self.estate.facilities,
+          openclose: self.estate.openclose,
+          description: self.estate.description,
+          time: firebase.firestore.Timestamp.now()
+        })
+        .then((docRef) => {
+          console.log(docRef.id);
+          self.entryDocId = docRef.id
+          self.estate.estateName = ''
+          self.estate.image = ''
+          self.estate.introduction = ''
+          self.estate.prefecture = ''
+          self.estate.municipalities = ''
+          self.estate.address = ''
+          self.estate.addressnum = ''
+          self.estate.line = ''
+          self.estate.station = ''
+          self.estate.walk = 0
+          self.estate.rent = ''
+          self.estate.manage = ''
+          self.estate.deposit = ''
+          self.estate.keymoney = ''
+          self.estate.freerent = ''
+          self.estate.insurance = ''
+          self.estate.insurancecompany = ''
+          self.estate.securitydeposit = ''
+          self.estate.floor = ''
+          self.estate.occupiedarea = ''
+          self.estate.year = ''
+          self.estate.direction = ''
+          self.estate.renttype = ''
+          self.estate.features = ''
+          self.estate.impossible = ''
+          self.estate.movein = ''
+          self.estate.construction = ''
+          self.estate.floornum = ''
+          self.estate.floormax = ''
+          self.estate.floor = ''
+          self.estate.roomcnt = ''
+          self.estate.elevator = ''
+          self.estate.transaction = ''
+          self.estate.facilities = ''
+          self.estate.openclose = ''
+          self.estate.description = ''
+          self.inputFileReset()
+        })
+        .catch((error) => {
+          console.log(error);
+          self.errormessages.push(error)
+        })
     },
     
   },

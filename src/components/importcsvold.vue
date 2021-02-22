@@ -1,8 +1,6 @@
 <template>
    <div>
-    <h1>csvファイル firebaseインポートツール</h1>
-    <p>選択したcsvファイルをfirebaseにインポートします（開発者用）</p>
-    <br>
+    <h1>csvファイル 検索ツール（簡易オートフィルタ）</h1>
     <input type="file" @change="fileChange">
     <ul v-for="object in objects" v-bind:key="object">
       <li>{{ object[0] }}</li>
@@ -11,21 +9,17 @@
       <li>{{ object[3] }}</li>
       <li>{{ object[4] }}</li>
     </ul>
-    <ul v-for="errormessage in errormessages" :key="errormessage.index">
-        <li><p>{{errormessage}}</p></li>
-      </ul>
    </div>
 </template>
 
 <script>
-import firebase from 'firebase';
+// import firebase from 'firebase';
 import Encoding from 'encoding-japanese';
 
 
 export default {
   data: function(){
     return{
-      errormessages: [],
       index: 1,
       gyouNum: 30,
       fileData: [],
@@ -57,26 +51,50 @@ export default {
           var arr = unicodeString.trim().replace("\"", "").split("\n");
           var fileData = arr.map(v => v.split(","));
 
-          const db = firebase.firestore()
-          const dbEstate = db.collection('maniciples')
-          fileData.forEach(element => {
-            dbEstate.add({
-              code: element[0],
-              prefectures: element[1],
-              maniciples: element[2],
-              kanapref: element[3],
-              kanamani: element[4],
-            }).then((docRef) => {
-              console.log(docRef.id);
-            }).catch((error) => {
-            console.log(error);
-            self.errormessages.push(error)
-          })
-
-          });
+          const header = fileData[0]
           // const db = firebase.firestore()
           // const dbEstate = db.collection('places')
-          
+          var tmpResultArray = fileData.map(function (r) {
+            var arrayInKeyAndValue = header.map(function (_, index) {
+              
+              var key = header[index].replace(/\s+/g, '')
+              console.log(key);
+              var value = r[index]
+              console.log(value);
+              dbEstate.add({
+                code: value
+              });
+              //ヘッダーの空白文字を削除。keyとvalueに値をセット
+              return ({ key: header[index].replace(/\s+/g, ''), value: r[index] });
+            })
+            
+            arrayInKeyAndValue = arrayInKeyAndValue.reduce(function (previous, current) {
+              //連想配列を作成
+              previous[current.key] = current.value;
+              return previous;
+            }, {});
+            return arrayInKeyAndValue;
+          });
+          var objects = tmpResultArray.reduce(function (previous, current, index) {
+            previous[index] = current;
+            return previous;
+          }, {});
+          return objects;
+          // objects.forEach(key => 
+          //   console.log(key + ':' + objects[key])
+          // )
+
+
+          // objects.forEach(key => 
+          //   dbEstate.add({
+          //     key: objects[key],
+          //   }).then((docRef) => {
+          //     console.log(docRef.id);
+          //   }).catch((error) => {
+          //     console.log(error);
+          //     self.errormessages.push(error)
+          //   })
+          // );
         };
       reader.readAsArrayBuffer(file);   
     },

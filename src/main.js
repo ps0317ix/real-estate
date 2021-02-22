@@ -9,6 +9,7 @@ import { firebaseConfig } from '../plugins/firebase';
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/swiper-bundle.css'
 
+
 Vue.use(VueAwesomeSwiper)
 
 Vue.config.productionTip = false;
