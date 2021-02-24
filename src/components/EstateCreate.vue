@@ -32,16 +32,16 @@
     </div>
     <label for="prefecture">住所（都道府県）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
-      <select v-model="estate.prefecture" placeholder="例：大阪府" class="input">
+      <select v-model="estate.prefecture" placeholder="例：大阪府" class="input" v-on:change="_set_pref">
         <option value="">選択してください</option>
-        <option v-for="(pref, index) in prefs" :key="index">{{pref}}</option>
+        <option v-for="(area, index) in prefectures" :key="index">{{area.prefectures}}</option>
       </select>
     </div>
     <label for="municipalities">住所（市区町村）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
-      <select v-model="estate.municipalities" placeholder="例：大阪市北区" class="input">
+      <select v-model="estate.municipalities" placeholder="例：大阪市北区" class="input" v-if="estate.prefecture.length>0">
         <option value="">選択してください</option>
-        <option v-for="(municipality, index) in municipalities" :key="index">{{municipality}}</option>
+        <option v-for="(area, index) in municipalities" :key="index">{{area.maniciples}}</option>
       </select>
     <!-- <input
            type="text"
@@ -330,11 +330,11 @@
       <label for="ラウンジ">ラウンジ</label>
     </div>
 
-    <label for="openclose">公開設定：</label>
-    <div class="form_content">
-      <input type="checkbox" v-model="estate.openclose" class="checkbox" value="open" checked>
+    <label>公開設定：</label>
+    <div class="form_facilities_content">
+      <input type="radio" v-model="estate.openclose" class="checkbox" value="open" checked/>
       <label for="open">公開</label>
-      <input type="checkbox" v-model="estate.openclose" class="checkbox" value="close">
+      <input type="radio" v-model="estate.openclose" class="checkbox" value="close">
       <label for="close">非公開</label>
     </div>
 
@@ -378,9 +378,12 @@ export default {
       entryDocId: "",
       errormessages: [],
       selected_area: "",
-      selected_pref : "",
-      selected_prefs: [],
+      selectPref: '',
+      selectCity: '',
       reset: true,
+      areas: [],
+      prefectures: [],
+      municipalities: [],
       estate: {
         estateName: '',
         image: '',
@@ -423,15 +426,27 @@ export default {
     }
   },
   computed: {
-    areas(){
-      return this.$store.state.area
-    },
-    prefs(){
-      return this.$store.state.pref
-    },
-    municipalities(){
-      return this.$store.state.municipalities
-    }
+  },
+  created() {
+    let self = this
+    let db = firebase.firestore()
+    var dbEstate = db.collection('areas').orderBy('code', 'asc')
+    dbEstate.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        var data = doc.data()
+        if(data.maniciples==''){
+          var area = {
+            code: data.code,
+            prefectures: data.prefectures,
+            maniciples: data.maniciples,
+            kanamani: data.kanamani,
+            kanapref: data.kanapref
+          }
+          self.prefectures.push(area)
+        }
+        
+      })
+    })
   },
   methods: {
     upload(e) {
@@ -463,9 +478,30 @@ export default {
         this.reset = true
       })
     },
-    _set_area : function(){
-      this.selected_pref = "";
-      this.selected_prefs = this.prefs[this.selected_area];
+    _set_pref : function(){
+      let self = this
+      let db = firebase.firestore()
+      var prefecture = self.estate.prefecture
+      console.log(prefecture);
+      
+      self.estate.maniciples = "";
+      // this.estate.maniciples = this.maniciples[this.estate.prefecture];
+      var dbEstate = db.collection('areas').orderBy('code', 'asc')
+      dbEstate.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          var data = doc.data()
+          if(data.prefectures==prefecture){
+            var area = {
+              code: data.code,
+              prefectures: data.prefectures,
+              maniciples: data.maniciples,
+              kanamani: data.kanamani,
+              kanapref: data.kanapref
+            }
+            self.municipalities.push(area)
+          }
+        })
+      })
     },
     entryEstate() {
       let self = this

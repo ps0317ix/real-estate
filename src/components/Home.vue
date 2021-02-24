@@ -96,6 +96,8 @@ export default {
         contactEmail: "",
         detail: "",
         posts: [],
+        latitude: 35.681419474781634,
+        longitude: 139.76416467496134
       }
   },
   created() {
@@ -166,6 +168,38 @@ export default {
         this.contactEmail = "";
         this.detail = "";
       }
+  },
+  mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        function(position){
+          let coords = position.coords;
+          // 緯度経度だけ取得
+          this.latitude = coords.latitude;
+          this.longitude = coords.longitude;
+          alert("緯度:"+ this.latitude +",経度"+ this.longitude);
+        }.bind(this),
+        function(error) {
+          // エラー処理を書く
+          switch(error.code) {
+            case 1: //PERMISSION_DENIED
+              alert("位置情報の利用が許可されていません");
+              break;
+            case 2: //POSITION_UNAVAILABLE
+              alert("現在位置が取得できませんでした");
+              break;
+            case 3: //TIMEOUT
+              alert("タイムアウトになりました");
+              break;
+            default:
+              alert("その他のエラー(エラーコード:"+error.code+")");
+              break;
+          }
+        }
+      );
+    } else {
+      // エラー処理を書く
+    }
   }
 }
 </script>
