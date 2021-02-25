@@ -43,12 +43,6 @@
         <option value="">選択してください</option>
         <option v-for="(area, index) in municipalities" :key="index">{{area.maniciples}}</option>
       </select>
-    <!-- <input
-           type="text"
-           v-model="estate.municipalities"
-           placeholder="例：大阪市北区"
-           class="input"
-           > -->
     </div>
     <label for="address">住所（町名）：<span style="color:red;">*必須</span></label>
     <div class="form_content">
@@ -430,7 +424,7 @@ export default {
   created() {
     let self = this
     let db = firebase.firestore()
-    var dbEstate = db.collection('areas').orderBy('code', 'asc')
+    var dbEstate = db.collection('areas').orderBy('pref_code', 'asc')
     dbEstate.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         var data = doc.data()
@@ -485,12 +479,13 @@ export default {
       console.log(prefecture);
       
       self.estate.maniciples = "";
+      self.municipalities.length = 0;
       // this.estate.maniciples = this.maniciples[this.estate.prefecture];
-      var dbEstate = db.collection('areas').orderBy('code', 'asc')
+      var dbEstate = db.collection('areas').orderBy('pref_code', 'asc')
       dbEstate.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           var data = doc.data()
-          if(data.prefectures==prefecture){
+          if(data.prefectures==prefecture&&data.maniciples!=""){
             var area = {
               code: data.code,
               prefectures: data.prefectures,

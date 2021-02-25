@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@ivanv/vue-collapse-transition": "^1.0.0",
     "@vue/composition-api": "^1.0.0-rc.1",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
@@ -21,6 +22,7 @@
     "swiper": "^6.4.11",
     "vue": "^2.6.11",
     "vue-awesome-swiper": "^4.1.1",
+    "vue-collapse-transition": "^1.0.0",
     "vue-router": "^3.5.1",
     "vue-slick": "^1.1.16",
     "vuefire": "^3.0.0-alpha.2",

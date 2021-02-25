@@ -13,6 +13,9 @@
             <router-link to="/administrator" class="footer-text-link">管理者ホーム</router-link>
           </li>
           <li>
+            <router-link to="/administrator/estateall" class="footer-text-link">不動産情報一覧(編集・削除)</router-link>
+          </li>
+          <li>
             <router-link to="/administrator/estatecreate" class="footer-text-link">不動産情報登録</router-link>
           </li>
         </template>

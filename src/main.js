@@ -6,8 +6,8 @@ import store from './store';
 import axios from "axios";
 import firebase from 'firebase';
 import { firebaseConfig } from '../plugins/firebase';
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import 'swiper/swiper-bundle.css'
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/swiper-bundle.css';
 
 
 Vue.use(VueAwesomeSwiper)

@@ -8,7 +8,7 @@
        name="fade"
        appear
       >
-        <div class="our_service">
+        <div class="our_service contents">
           <h2>人気エリア</h2>
           <ul>
             <li>中目黒</li>
@@ -21,24 +21,44 @@
         </div>
         
       </transition>
-      
-      <h2>おすすめ物件</h2>
-    <div>
-      <ul class="estate-lists" v-for="estate in estates" :key="estate.index">
-        <transition
-        name="fade"
-        appear
-        >
-          <a :href="linktodetail(estate.entryDocId)">
-          <li class="estate-list">
-            <img :src="estate.image" v-bind:alt="estate.estateName">
-            <h3>{{estate.estateName}}</h3>
-            <p>賃料 ¥{{estate.rent | addComma}}<br>{{estate.line}} {{estate.station}}</p>
-          </li>
-          </a>
-        </transition>
-      </ul>
-    </div>
+      <transition
+       name="fade"
+       appear
+      >
+        <div class="recommend_estates contents">
+          <h2>おすすめ物件</h2>
+          <ul class="estate-lists" v-for="estate in estates" :key="estate.index">
+          <transition
+          name="fade"
+          appear
+          >
+            <a :href="linktodetail(estate.entryDocId)">
+            <li class="estate-list">
+              <img :src="estate.image" v-bind:alt="estate.estateName">
+              <h3>{{estate.estateName}}</h3>
+              <p>賃料 ¥{{estate.rent | addComma}}<br>{{estate.line}} {{estate.station}}</p>
+            </li>
+            </a>
+          </transition>
+        </ul>
+        </div>
+      </transition>
+      <transition
+       name="fade"
+       appear
+      >
+        <div class="recommend_estates contents">
+          <h2>よくある質問</h2>
+          <ul>
+            <li>
+              <button class="collapse_button" @click="isOpen = !isOpen">Q. ~とはなんですか？</button>
+              <collapse-transition>
+                <div v-show="isOpen">This div will open and close smoothly!</div>
+              </collapse-transition>
+            </li>
+          </ul>
+        </div>
+      </transition>
       
       
       <div class="form">
@@ -82,13 +102,16 @@
 <script>
 import axios from "axios";
 import firebase from 'firebase';
+import { CollapseTransition } from "vue-collapse-transition";
 
 export default {
     name: 'Home',
     props: {
       msg: String
     },
-    
+    components:{
+      CollapseTransition,
+    },
     data(){
       return{
         estates: [],
@@ -97,7 +120,8 @@ export default {
         detail: "",
         posts: [],
         latitude: 35.681419474781634,
-        longitude: 139.76416467496134
+        longitude: 139.76416467496134,
+        isOpen: false
       }
   },
   created() {
@@ -269,5 +293,14 @@ a {
   color: black;
   padding: 10px;
   margin: 10px 0px 0px 0px;
+}
+
+.contents{
+  margin: 30px 0px;
+}
+
+.collapse_button{
+  background: #fff;
+  border: none;
 }
 </style>
