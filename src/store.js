@@ -61,19 +61,20 @@ export default new Vuex.Store({
               "鹿児島県",
               "沖縄県"
           ],
-        municipalities: []
+        municipalities: [],
+        stations: []
     },
     getters: {
         idToken: state => state.idToken,
-        municipalities: state => state.municipalities,
+        stations: state => state.stations,
     },
     mutations: {
         updateIdToken(state, idToken){
             state.idToken = idToken;
         },
-        addAreas(state, area){
-            console.log(area);
-            state.areas.push(area)
+        addStations(state, stationdata){
+            console.log(stationdata);
+            state.stations.push(stationdata)
         },
     },
     actions: {
@@ -176,10 +177,9 @@ export default new Vuex.Store({
             }, authData.expiresIn * 1000);
         },
         fetchManiciples ({ commit }){
-            firebase.firestore().collection("maniciples")
-            .where("maniciples", "==", "").get().then(snapshot => {
+            firebase.firestore().collection("stations").get().then(snapshot => {
               snapshot.forEach(doc => 
-                    commit( 'addAreas', doc.data())
+                    commit( 'addStations', doc.data())
                 )
             })
           },

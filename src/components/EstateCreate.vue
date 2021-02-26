@@ -378,6 +378,7 @@ export default {
       areas: [],
       prefectures: [],
       municipalities: [],
+      stations: this.stations,
       estate: {
         estateName: '',
         image: '',

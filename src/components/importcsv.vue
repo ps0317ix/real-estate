@@ -58,14 +58,22 @@ export default {
           var fileData = arr.map(v => v.split(","));
 
           const db = firebase.firestore()
-          const dbEstate = db.collection('areas')
+          const dbEstate = db.collection('stations')
           fileData.forEach(element => {
             dbEstate.add({
               pref_code: Number(element[0]),
               prefectures: element[1],
-              maniciples: element[2],
-              kanapref: element[3],
-              kanamani: element[4]
+              station_code: Number(element[2]),
+              station_name: element[3],
+              station_yomi: element[4],
+              station_note: element[5],
+              station_lat: Number(element[6]),
+              station_lon: Number(element[7]),
+              line_code: Number(element[8]),
+              line_name: element[9],
+              order: Number(element[10]),
+              company_code: Number(element[11]),
+              company_name: element[12],
             }).then((docRef) => {
               console.log(docRef.id);
             }).catch((error) => {
