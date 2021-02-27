@@ -74,6 +74,11 @@ export default {
               order: Number(element[10]),
               company_code: Number(element[11]),
               company_name: element[12],
+              // code: Number(element[0]),
+              // prefectures: element[1],
+              // maniciples: element[2],
+              // kanapref: element[3],
+              // kanamani: element[4],
             }).then((docRef) => {
               console.log(docRef.id);
             }).catch((error) => {

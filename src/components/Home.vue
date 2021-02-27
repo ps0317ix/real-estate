@@ -51,10 +51,11 @@
           <h2>よくある質問</h2>
           <ul>
             <li>
-              <button class="collapse_button" @click="isOpen = !isOpen">Q. ~とはなんですか？</button>
+              <button class="collapse_button" @click="isOpen = !isOpen">＋ Q. ~とはなんですか？</button>
               <collapse-transition>
-                <div v-show="isOpen">This div will open and close smoothly!</div>
+                <div v-show="isOpen">A. 〜はです。</div>
               </collapse-transition>
+              <hr>
             </li>
           </ul>
         </div>
@@ -249,6 +250,10 @@ a {
   color: #42b983;
 }
 
+hr{
+  margin: 0px;
+}
+
 .fv_image{
   background-image: url('../assets/pixta_64405275_M.jpg');
 }
@@ -302,5 +307,7 @@ a {
 .collapse_button{
   background: #fff;
   border: none;
+  width: 300px;
+  text-align: left;
 }
 </style>

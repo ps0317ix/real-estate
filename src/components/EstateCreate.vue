@@ -64,12 +64,16 @@
     </div>
     <label for="line">最寄路線1：<span style="color:red;">*必須</span></label>
     <div class="form_content">
-    <input
+    <!-- <input
            type="text"
            v-model="estate.line"
            placeholder="例：東海道本線"
            class="input"
-           >
+           > -->
+    <select v-model="estate.line" placeholder="例：大阪市北区" class="input" v-if="estate.prefecture.length>0">
+        <option value="">選択してください</option>
+        <option v-for="(area, index) in stations" :key="index">{{area.line_name}}</option>
+      </select>
     </div>
     <label for="station">最寄駅1：<span style="color:red;">*必須</span></label>
     <div class="form_content">
@@ -378,7 +382,7 @@ export default {
       areas: [],
       prefectures: [],
       municipalities: [],
-      stations: this.stations,
+      stations: [],
       estate: {
         estateName: '',
         image: '',
@@ -425,22 +429,39 @@ export default {
   created() {
     let self = this
     let db = firebase.firestore()
-    var dbEstate = db.collection('areas').orderBy('pref_code', 'asc')
+    let areas = self.areas
+
+    // 都道府県取得
+    let dbEstate = db.collection('areas').orderBy('code', 'asc')
     dbEstate.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        var data = doc.data()
-        if(data.maniciples==''){
-          var area = {
+        let data = doc.data()
+        let area = {
+          code: data.code,
+          prefectures: data.prefectures,
+          maniciples: data.maniciples,
+          kanamani: data.kanamani,
+          kanapref: data.kanapref
+        }
+        areas.push(area)
+
+        if(data.maniciples==""){
+          let prefecture = {
             code: data.code,
             prefectures: data.prefectures,
             maniciples: data.maniciples,
             kanamani: data.kanamani,
             kanapref: data.kanapref
           }
-          self.prefectures.push(area)
+          self.prefectures = prefecture
         }
-        
       })
+    })
+    console.log(areas);
+
+    self.prefectures = areas.filter(data => {
+      console.log(data);
+      return data.maniciples==''
     })
   },
   methods: {
@@ -476,18 +497,18 @@ export default {
     _set_pref : function(){
       let self = this
       let db = firebase.firestore()
-      var prefecture = self.estate.prefecture
+      let prefecture = self.estate.prefecture
       console.log(prefecture);
       
       self.estate.maniciples = "";
       self.municipalities.length = 0;
       // this.estate.maniciples = this.maniciples[this.estate.prefecture];
-      var dbEstate = db.collection('areas').orderBy('pref_code', 'asc')
+      let dbEstate = db.collection('areas').orderBy('code', 'asc')
       dbEstate.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          var data = doc.data()
+          let data = doc.data()
           if(data.prefectures==prefecture&&data.maniciples!=""){
-            var area = {
+            let area = {
               code: data.code,
               prefectures: data.prefectures,
               maniciples: data.maniciples,
@@ -495,6 +516,22 @@ export default {
               kanapref: data.kanapref
             }
             self.municipalities.push(area)
+          }
+        })
+      })
+
+      self.stations.length = 0;
+      dbEstate = db.collection('stations').orderBy('line_code', 'asc')
+      dbEstate.get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          let data = doc.data()
+          if(data.prefectures.includes(prefecture)){
+            let station = {
+              code: data.code,
+              prefectures: data.prefectures,
+              company_name: data.company_name,
+            }
+            self.stations.push(station)
           }
         })
       })
