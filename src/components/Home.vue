@@ -36,7 +36,8 @@
             <li class="estate-list">
               <img :src="estate.image" v-bind:alt="estate.estateName">
               <h3>{{estate.estateName}}</h3>
-              <p>賃料 ¥{{estate.rent | addComma}}<br>{{estate.line}} {{estate.station}}</p>
+              <p>賃料 ¥{{estate.rent | addComma}}</p>
+              <p>{{estate.line}} {{estate.station}}</p>
             </li>
             </a>
           </transition>
@@ -47,15 +48,33 @@
        name="fade"
        appear
       >
-        <div class="recommend_estates contents">
+        <div class="qanda contents">
           <h2>よくある質問</h2>
           <ul>
             <li>
-              <button class="collapse_button" @click="isOpen = !isOpen">＋ Q. ~とはなんですか？</button>
-              <collapse-transition>
-                <div v-show="isOpen">A. 〜はです。</div>
-              </collapse-transition>
+              <js-accordion>
+                <div slot="title">＋ Q. ~とはなんですか？</div>
+                <div class="js-accordion--body" slot="body">
+                  <p>A. 〜はです。</p>
+                </div>
+              </js-accordion>
               <hr>
+            </li>
+            <li>
+              <js-accordion>
+                <div slot="title">＋ Q. ~とはなんですか？</div>
+                <div class="js-accordion--body" slot="body">
+                  <p>A. 〜はです。</p>
+                </div>
+              </js-accordion>
+            </li>
+            <li>
+              <js-accordion>
+                <div slot="title">＋ Q. ~とはなんですか？</div>
+                <div class="js-accordion--body" slot="body">
+                  <p>A. 〜はです。</p>
+                </div>
+              </js-accordion>
             </li>
           </ul>
         </div>
@@ -103,7 +122,7 @@
 <script>
 import axios from "axios";
 import firebase from 'firebase';
-import { CollapseTransition } from "vue-collapse-transition";
+// import { CollapseTransition } from "vue-collapse-transition";
 
 export default {
     name: 'Home',
@@ -111,7 +130,7 @@ export default {
       msg: String
     },
     components:{
-      CollapseTransition,
+      // CollapseTransition,
     },
     data(){
       return{
@@ -122,7 +141,7 @@ export default {
         posts: [],
         latitude: 35.681419474781634,
         longitude: 139.76416467496134,
-        isOpen: false
+        isOpened: false
       }
   },
   created() {
@@ -192,7 +211,10 @@ export default {
         this.name = "";
         this.contactEmail = "";
         this.detail = "";
-      }
+    },
+    accordionToggle: function(){
+      this.isOpened = !this.isOpened;
+    }
   },
   mounted() {
     if (navigator.geolocation) {
@@ -302,6 +324,10 @@ hr{
 
 .contents{
   margin: 30px 0px;
+}
+
+.qanda ul li{
+  display: block;
 }
 
 .collapse_button{

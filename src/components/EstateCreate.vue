@@ -62,27 +62,20 @@
            class="input"
            >
     </div>
-    <label for="line">最寄路線1：<span style="color:red;">*必須</span></label>
+    <!-- <label for="line">最寄路線1：<span style="color:red;">*必須</span></label>
     <div class="form_content">
-    <!-- <input
-           type="text"
-           v-model="estate.line"
-           placeholder="例：東海道本線"
-           class="input"
-           > -->
-    <select v-model="estate.line" placeholder="例：大阪市北区" class="input" v-if="estate.prefecture.length>0">
+      <select v-model="estate.line" class="input" v-if="estate.prefecture.length>0">
         <option value="">選択してください</option>
-        <option v-for="(area, index) in stations" :key="index">{{area.line_name}}</option>
+        <option v-for="(line_name, index) in line_names" :key="index">{{line_name}}</option>
       </select>
-    </div>
-    <label for="station">最寄駅1：<span style="color:red;">*必須</span></label>
+    </div> -->
+    <label for="station">最寄駅：<span style="color:red;">*必須</span></label>
+    <p>Windowsはctrl, macはcommandで複数選択可能</p>
     <div class="form_content">
-    <input
-           type="text"
-           v-model="estate.station"
-           placeholder="例：大阪駅"
-           class="input"
-           >
+      <select v-model="estate.station" class="input" v-if="estate.prefecture.length>0" style="height: 500px;" multiple>
+        <option value="">選択してください</option>
+        <option v-for="(station, index) in stations" :key="index">{{station.station_name}} ({{station.line_name}})</option>
+      </select>
     </div>
     <label for="rent">賃料：</label>
     <div class="form_content">
@@ -383,6 +376,7 @@ export default {
       prefectures: [],
       municipalities: [],
       stations: [],
+      line_names: [],
       estate: {
         estateName: '',
         image: '',
@@ -453,11 +447,10 @@ export default {
             kanamani: data.kanamani,
             kanapref: data.kanapref
           }
-          self.prefectures = prefecture
+          self.prefectures.push(prefecture)
         }
       })
     })
-    console.log(areas);
 
     self.prefectures = areas.filter(data => {
       console.log(data);
@@ -467,13 +460,11 @@ export default {
   methods: {
     upload(e) {
       const file = e.target.files[0]
- 
       if (!file.type.includes('image')) {
         this.errormessages.push('画像を指定してください')
         this.inputFileReset()
         return
       }
- 
       const storageRef = firebase.storage().ref(file.name)
       storageRef.put(file).then(() => {
         firebase
@@ -498,43 +489,48 @@ export default {
       let self = this
       let db = firebase.firestore()
       let prefecture = self.estate.prefecture
-      console.log(prefecture);
+      let areas = self.areas
+      let line_names = []
       
       self.estate.maniciples = "";
       self.municipalities.length = 0;
-      // this.estate.maniciples = this.maniciples[this.estate.prefecture];
-      let dbEstate = db.collection('areas').orderBy('code', 'asc')
-      dbEstate.get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          let data = doc.data()
-          if(data.prefectures==prefecture&&data.maniciples!=""){
-            let area = {
-              code: data.code,
-              prefectures: data.prefectures,
-              maniciples: data.maniciples,
-              kanamani: data.kanamani,
-              kanapref: data.kanapref
-            }
-            self.municipalities.push(area)
+      // dbEstate = db.collection('areas').orderBy('code', 'asc')
+      areas.forEach((data) => {
+        if(data.prefectures==prefecture&&data.maniciples!=""){
+          let maniciple = {
+            code: data.code,
+            prefectures: data.prefectures,
+            maniciples: data.maniciples,
+            kanamani: data.kanamani,
+            kanapref: data.kanapref
           }
-        })
+          self.municipalities.push(maniciple)
+        }
       })
 
       self.stations.length = 0;
-      dbEstate = db.collection('stations').orderBy('line_code', 'asc')
+      let dbEstate = db.collection('stations').orderBy('station_yomi', 'asc')
       dbEstate.get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           let data = doc.data()
-          if(data.prefectures.includes(prefecture)){
+          if(data.prefectures==prefecture){
             let station = {
-              code: data.code,
+              line_code: data.line_code,
+              line_name: data.line_name,
               prefectures: data.prefectures,
               company_name: data.company_name,
+              station_name: data.station_name,
+              station_yomi: data.station_yomi
             }
             self.stations.push(station)
+            if (line_names.indexOf(data.line_name) == -1){
+              line_names.push(data.line_name)
+            }
           }
         })
       })
+      console.log(line_names);
+      self.line_names = line_names
     },
     entryEstate() {
       let self = this
@@ -560,7 +556,7 @@ export default {
           addressnum: self.estate.addressnum,
           line: self.estate.line,
           station: self.estate.station,
-          walk: self.estate.walk,
+          walk: Number(self.estate.walk),
           rent: self.estate.rent,
           manage: self.estate.manage,
           deposit: self.estate.deposit,
@@ -570,7 +566,7 @@ export default {
           insurancecompany: self.estate.insurancecompany,
           securitydeposit: self.estate.securitydeposit,
           floor: self.estate.floor,
-          occupiedarea: self.estate.occupiedarea,
+          occupiedarea: Number(self.estate.occupiedarea),
           year: self.estate.year,
           direction: self.estate.direction,
           renttype: self.estate.renttype,
@@ -578,10 +574,10 @@ export default {
           impossible: self.estate.impossible,
           movein: self.estate.movein,
           construction: self.estate.construction,
-          floornum: self.estate.floornum,
-          floormax: self.estate.floormax,
-          floormin: self.estate.floormin,
-          roomcnt: self.estate.roomcnt,
+          floornum: Number(self.estate.floornum),
+          floormax: Number(self.estate.floormax),
+          floormin: Number(self.estate.floormin),
+          roomcnt: Number(self.estate.roomcnt),
           elevator: self.estate.elevator,
           transaction: self.estate.transaction,
           facilities: self.estate.facilities,

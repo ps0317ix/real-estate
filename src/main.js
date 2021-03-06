@@ -8,6 +8,7 @@ import firebase from 'firebase';
 import { firebaseConfig } from '../plugins/firebase';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
+import Accordion from './components/Accordion.vue';
 
 
 Vue.use(VueAwesomeSwiper)
@@ -20,6 +21,10 @@ Vue.directive("border", function(el, binding){
   el.style.borderColor = binding.value.color;
   el.style.borderStyle = binding.arg;
 });
+
+
+Vue.component('js-accordion', Accordion);
+
 
 
 // axiosを用いる際のbaseURL
